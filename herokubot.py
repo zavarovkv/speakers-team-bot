@@ -11,12 +11,12 @@ def start(bot, update):
 def echo(bot, update):
     update.effective_message.reply_text(update.effective_message.text)
 
+
 def error(bot, update, error):
     logger.warning('Update "%s" caused error "%s"', update, error)
 
 
 if __name__ == "__main__":
-    # Set these variable to the appropriate values
     TOKEN = "Your token from @Botfather"
     NAME = "The name of your app on Heroku"
 
@@ -31,6 +31,7 @@ if __name__ == "__main__":
     # Set up the Updater
     updater = Updater(TOKEN)
     dp = updater.dispatcher
+
     # Add handlers
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(MessageHandler(Filters.text, echo))
