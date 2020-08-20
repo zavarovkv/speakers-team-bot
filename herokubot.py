@@ -107,7 +107,7 @@ def main():
         entry_points=[CallbackQueryHandler(gender)],
 
         states={
-            GENDER: CommandHandler('SPEAKER', gender),
+            GENDER: [CommandHandler('SPEAKER', gender)],
 
             PHOTO: [MessageHandler(Filters.photo, photo),
                     CommandHandler('skip', skip_photo)],
