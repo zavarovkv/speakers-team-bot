@@ -12,6 +12,8 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+GENDER, PHOTO, LOCATION, BIO = range(4)
+
 
 def start(update, context):
     keyboard = [[InlineKeyboardButton('Я спикер', callback_data='CHOSE_SPEAKER')],
@@ -19,6 +21,38 @@ def start(update, context):
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Расскажи о себе', reply_markup=reply_markup)
+
+    return GENDER
+
+
+def gender(update, context):
+    user = update.message.from_user
+    logger.info("Gender of %s: %s", user.first_name, update.message.text)
+    update.message.reply_text('I see! Please send me a photo of yourself, '
+                              'so I know what you look like, or send /skip if you don\'t want to.',
+                              reply_markup=ReplyKeyboardRemove())
+
+    return PHOTO
+
+
+def photo(update, context):
+    user = update.message.from_user
+    photo_file = update.message.photo[-1].get_file()
+    photo_file.download('user_photo.jpg')
+    logger.info("Photo of %s: %s", user.first_name, 'user_photo.jpg')
+    update.message.reply_text('Gorgeous! Now, send me your location please, '
+                              'or send /skip if you don\'t want to.')
+
+    return ConversationHandler.END
+
+
+def skip_photo(update, context):
+    user = update.message.from_user
+    logger.info("User %s did not send a photo.", user.first_name)
+    update.message.reply_text('I bet you look great! Now, send me your location please, '
+                              'or send /skip.')
+
+    return ConversationHandler.END
 
 
 def button(update, context):
@@ -52,7 +86,19 @@ def main():
     dp = updater.dispatcher
 
     # Add handlers
-    dp.add_handler(CommandHandler('start', start))
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+
+        states={
+            GENDER: [MessageHandler(Filters.regex('^(Boy|Girl|Other)$'), gender)],
+
+            PHOTO: [MessageHandler(Filters.photo, photo),
+                    CommandHandler('skip', skip_photo)]
+        }
+    )
+
+    dp.add_handler(conv_handler)
+
     dp.add_handler(CommandHandler('help', help_command))
     updater.dispatcher.add_handler(CallbackQueryHandler(button))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
