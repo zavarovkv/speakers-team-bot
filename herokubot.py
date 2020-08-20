@@ -14,23 +14,14 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-    keyboard = [InlineKeyboardButton('Я спикер', callback_data='SPEAKER'),
-                InlineKeyboardButton('Я организатор', callback_data='MANAGER')]
+    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
+                 InlineKeyboardButton("Option 2", callback_data='2')],
+
+                [InlineKeyboardButton("Option 3", callback_data='3')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text(
-        'Привет {username}!\n\n'
-        'Это Speakers Team — сообщество для всех, кто хочет и готов выступать на '
-        'профильных конференциях и митапах. И организаторов, которые ищут крутых '
-        'спикеров.\n\n'
-        '1. Расскажи о себе или мероприятии.\n\n'
-        '2. Получай приглашения от организаторов конференций или резюме спикеров,'
-        'которые готовы выступать.\n\n',
-        '3. Прокачивай свою репутацию в профессиональном сообществе как спикер или '
-        'бренд работодателя как организатор 🙂.\n\n'
-        'Все зависит от того, что ты выберешь 👇',
-        reply_markup=reply_markup)
+    update.message.reply_text('Please choose:', reply_markup=reply_markup)
 
 
 def button(update, context):
