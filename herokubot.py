@@ -1,41 +1,44 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import logging
 import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-def start(bot, update):
-    update.effective_message.reply_text("Hi!")
-    bot.sendMessage(update.message.chat_id, str(update.message.from_user.username))
+
+def start(update, context):
+    update.message.reply_text('Hi!')
 
 
-def echo(bot, update):
-    update.effective_message.reply_text(update.effective_message.text)
+def help_command(update, context):
+    update.message.reply_text('Help!')
+
+
+def echo(update, context):
+    update.message.reply_text(update.message.text)
 
 
 def error(bot, update, error):
     logger.warning('Update "%s" caused error "%s"', update, error)
 
 
-if __name__ == "__main__":
+def main():
     TOKEN = os.environ.get('TOKEN')
     NAME = os.environ.get('NAME')
-
-    # Port is given by Heroku
     PORT = os.environ.get('PORT')
 
-    # Enable logging
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                        level=logging.INFO)
-    logger = logging.getLogger(__name__)
-
-    # Set up the Updater
     updater = Updater(TOKEN)
     dp = updater.dispatcher
 
     # Add handlers
     dp.add_handler(CommandHandler('start', start))
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    dp.add_handler(CommandHandler('help', help_command))
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
     dp.add_error_handler(error)
 
     # Start the webhook
@@ -44,3 +47,7 @@ if __name__ == "__main__":
                           url_path=TOKEN)
     updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
     updater.idle()
+
+
+if __name__ == "__main__":
+    main()
