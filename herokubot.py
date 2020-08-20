@@ -57,6 +57,15 @@ def skip_photo(update, context):
     return ConversationHandler.END
 
 
+def cancel(update, context):
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
+    update.message.reply_text('Bye! I hope we can talk again some day.',
+                              reply_markup=ReplyKeyboardRemove())
+
+    return ConversationHandler.END
+
+
 def button(update, context):
     query = update.callback_query
     query.answer()
@@ -96,15 +105,12 @@ def main():
 
             PHOTO: [MessageHandler(Filters.photo, photo),
                     CommandHandler('skip', skip_photo)]
-        }
+        },
+
+        fallbacks=[CommandHandler('cancel', cancel)]
     )
 
     dp.add_handler(conv_handler)
-
-    dp.add_handler(CommandHandler('help', help_command))
-    updater.dispatcher.add_handler(CallbackQueryHandler(button))
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
-    dp.add_error_handler(error)
 
     # Start the webhook
     updater.start_webhook(listen="0.0.0.0",
