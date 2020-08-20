@@ -107,7 +107,7 @@ def main():
         entry_points=[CommandHandler(gender)],
 
         states={
-            0: [MessageHandler('SPEAKER', gender)],
+            0: CommandHandler('SPEAKER', gender),
 
             PHOTO: [MessageHandler(Filters.photo, photo),
                     CommandHandler('skip', skip_photo)],
@@ -121,8 +121,11 @@ def main():
         fallbacks=[CommandHandler('cancel', cancel)]
     )
 
-    dp.add_handler(conv_handler)
+    start_handler = CommandHandler('start', start)
 
+    dp.add_handler(conv_handler)
+    dp.add_handler(start_handler)
+    
     # Start the webhook
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
