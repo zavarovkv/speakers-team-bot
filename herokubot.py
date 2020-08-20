@@ -4,7 +4,8 @@
 import os
 import logging
 
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton,
+                      InlineKeyboardMarkup)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           ConversationHandler)
 
@@ -18,13 +19,14 @@ GENDER, PHOTO, LOCATION, BIO = range(4)
 
 
 def start(update, context):
-    reply_keyboard = [['Boy', 'Girl', 'Other']]
+    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
+                 InlineKeyboardButton("Option 2", callback_data='2')],
 
-    update.message.reply_text(
-        'Hi! My name is Professor Bot. I will hold a conversation with you. '
-        'Send /cancel to stop talking to me.\n\n'
-        'Are you a boy or a girl?',
-        reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+                [InlineKeyboardButton("Option 3", callback_data='3')]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text('Please choose:', reply_markup=reply_markup)
 
     return GENDER
 
