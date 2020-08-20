@@ -7,7 +7,7 @@ import logging
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton,
                       InlineKeyboardMarkup)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler)
+                          ConversationHandler, CallbackQueryHandler)
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -104,7 +104,7 @@ def main():
 
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler(gender)],
+        entry_points=[CallbackQueryHandler(gender)],
 
         states={
             0: CommandHandler('SPEAKER', gender),
@@ -125,7 +125,7 @@ def main():
 
     dp.add_handler(conv_handler)
     dp.add_handler(start_handler)
-    
+
     # Start the webhook
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
