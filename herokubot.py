@@ -4,12 +4,8 @@ import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 
-#def start(bot, update):
-#    update.effective_message.reply_text("Hi!")
-
-
-def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+def start(bot, update):
+    update.effective_message.reply_text("Hi!")
 
 
 def echo(bot, update):
