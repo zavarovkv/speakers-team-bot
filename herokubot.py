@@ -14,14 +14,12 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
-                 InlineKeyboardButton("Option 2", callback_data='2')],
-
-                [InlineKeyboardButton("Option 3", callback_data='3')]]
+    keyboard = [[InlineKeyboardButton('Я спикер', callback_data='1')],
+                [InlineKeyboardButton('Я организатор', callback_data='2')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text('Please choose:\n\n'
+    update.message.reply_text('Расскажи о себе:\n\n'
                               'text 2', reply_markup=reply_markup)
 
 
