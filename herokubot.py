@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import os
 
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler, CallbackQueryHandler)
+                          ConversationHandler)
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 GENDER, PHOTO, LOCATION, BIO = range(4)
@@ -45,7 +46,7 @@ def photo(update, context):
     update.message.reply_text('Gorgeous! Now, send me your location please, '
                               'or send /skip if you don\'t want to.')
 
-    return ConversationHandler.END
+    return LOCATION
 
 
 def skip_photo(update, context):
@@ -53,6 +54,34 @@ def skip_photo(update, context):
     logger.info("User %s did not send a photo.", user.first_name)
     update.message.reply_text('I bet you look great! Now, send me your location please, '
                               'or send /skip.')
+
+    return LOCATION
+
+
+def location(update, context):
+    user = update.message.from_user
+    user_location = update.message.location
+    logger.info("Location of %s: %f / %f", user.first_name, user_location.latitude,
+                user_location.longitude)
+    update.message.reply_text('Maybe I can visit you sometime! '
+                              'At last, tell me something about yourself.')
+
+    return BIO
+
+
+def skip_location(update, context):
+    user = update.message.from_user
+    logger.info("User %s did not send a location.", user.first_name)
+    update.message.reply_text('You seem a bit paranoid! '
+                              'At last, tell me something about yourself.')
+
+    return BIO
+
+
+def bio(update, context):
+    user = update.message.from_user
+    logger.info("Bio of %s: %s", user.first_name, update.message.text)
+    update.message.reply_text('Thank you! I hope we can talk again some day.')
 
     return ConversationHandler.END
 
@@ -66,28 +95,6 @@ def cancel(update, context):
     return ConversationHandler.END
 
 
-def button(update, context):
-    query = update.callback_query
-    query.answer()
-
-    if query.data == 'CHOSE_SPEAKER':
-        query.edit_message_text('Я спикер')
-    elif query.data == 'CHOSE_MANAGER':
-        query.edit_message_text('Я организатор')
-
-
-def help_command(update, context):
-    update.message.reply_text('Help!')
-
-
-def echo(update, context):
-    update.message.reply_text(update.message.text)
-
-
-def error(update, context):
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
-
-
 def main():
     TOKEN = os.environ.get('TOKEN')
     NAME = os.environ.get('NAME')
@@ -96,7 +103,7 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
-    # Add handlers
+    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
 
@@ -104,7 +111,12 @@ def main():
             GENDER: [MessageHandler(Filters.regex('^(Boy|Girl|Other)$'), gender)],
 
             PHOTO: [MessageHandler(Filters.photo, photo),
-                    CommandHandler('skip', skip_photo)]
+                    CommandHandler('skip', skip_photo)],
+
+            LOCATION: [MessageHandler(Filters.location, location),
+                       CommandHandler('skip', skip_location)],
+
+            BIO: [MessageHandler(Filters.text & ~Filters.command, bio)]
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]
