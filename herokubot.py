@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-    keyboard = [[InlineKeyboardButton('Я спикер', callback_data='SPEAKER'),
-                 InlineKeyboardButton('Я организатор', callback_data='MANAGER')]]
+    keyboard = [InlineKeyboardButton('Я спикер', callback_data='SPEAKER'),
+                InlineKeyboardButton('Я организатор', callback_data='MANAGER')]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
