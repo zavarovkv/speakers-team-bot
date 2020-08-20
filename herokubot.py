@@ -19,8 +19,8 @@ GENDER, PHOTO, LOCATION, BIO = range(4)
 
 
 def start(update, context):
-    keyboard = [[InlineKeyboardButton("Option 1", callback_data='SPEAKER')]
-                [InlineKeyboardButton("Option 3", callback_data='MANAGER')]]
+    keyboard = [[InlineKeyboardButton('Option 1', callback_data='SPEAKER')],
+                [InlineKeyboardButton('Option 3', callback_data='MANAGER')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
