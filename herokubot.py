@@ -14,18 +14,21 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-    keyboard = [[InlineKeyboardButton('Я спикер', callback_data='SPEAKER')],
-                [InlineKeyboardButton('Я организатор', callback_data='MANAGER')]]
+    keyboard = [[InlineKeyboardButton('Я спикер', callback_data='CHOSE_SPEAKER')],
+                [InlineKeyboardButton('Я организатор', callback_data='CHOSE_MANAGER')]]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-
     update.message.reply_text('Расскажи о себе', reply_markup=reply_markup)
 
 
 def button(update, context):
     query = update.callback_query
     query.answer()
-    query.edit_message_text(query.data)
+
+    if query.data == 'CHOSE_SPEAKER':
+        query.edit_message_text('Я спикер')
+    elif query.data == 'CHOSE_MANAGER':
+        query.edit_message_text('Я организатор')
 
 
 def help_command(update, context):
