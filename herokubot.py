@@ -11,19 +11,19 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def start(update, context):
+def start(bot, update, context):
     update.message.reply_text('Hi!')
 
 
-def help_command(update, context):
+def help_command(bot, update, context):
     update.message.reply_text('Help!')
 
 
-def echo(update, context):
+def echo(bot, update, context):
     update.message.reply_text(update.message.text)
 
 
-def error(update, context):
+def error(bot, update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
