@@ -28,8 +28,6 @@ def start(update, context):
 
 
 def gender(update, context):
-    user = update.message.from_user
-    logger.info("Gender of %s: %s", user.first_name, update.message.text)
     update.message.reply_text('I see! Please send me a photo of yourself, '
                               'so I know what you look like, or send /skip if you don\'t want to.',
                               reply_markup=ReplyKeyboardRemove())
