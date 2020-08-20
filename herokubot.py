@@ -6,7 +6,7 @@ import os
 
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler)
+                          ConversationHandler, CallbackQueryHandler)
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -17,7 +17,7 @@ def start(update, context):
     keyboard = [[InlineKeyboardButton('Я спикер', callback_data='SPEAKER'),
                  InlineKeyboardButton('Я организатор', callback_data='MANAGER')]]
 
-    reply_keyboard = InlineKeyboardMarkup(keyboard)
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
     update.message.reply_text(
         'Привет {username}!\n\n'
@@ -30,7 +30,14 @@ def start(update, context):
         '3. Прокачивай свою репутацию в профессиональном сообществе как спикер или '
         'бренд работодателя как организатор 🙂.\n\n'
         'Все зависит от того, что ты выберешь 👇',
-        reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+        reply_markup=reply_markup)
+
+
+def button(update, context):
+    query = update.callback_query
+    query.answer()
+
+    query.edit_message_text(text="Selected option: {}".format(query.data))
 
 
 def help_command(update, context):
@@ -56,6 +63,7 @@ def main():
     # Add handlers
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('help', help_command))
+    updater.dispatcher.add_handler(CallbackQueryHandler(button))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
     dp.add_error_handler(error)
 
