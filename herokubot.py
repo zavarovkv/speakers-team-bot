@@ -21,7 +21,8 @@ def start(update, context):
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text('Please choose:', reply_markup=reply_markup)
+    update.message.reply_text('Please choose:\n\n'
+                              'text 2', reply_markup=reply_markup)
 
 
 def button(update, context):
