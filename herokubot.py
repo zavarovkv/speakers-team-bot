@@ -25,7 +25,7 @@ def start(update, context):
 def button(update, context):
     query = update.callback_query
     query.answer()
-    query.edit_message_text(query.message)
+    query.edit_message_text(query.data)
 
 
 def help_command(update, context):
