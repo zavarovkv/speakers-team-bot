@@ -16,11 +16,13 @@ GENDER, PHOTO, LOCATION, BIO = range(4)
 
 
 def start(update, context):
-    keyboard = [[InlineKeyboardButton('Я спикер', callback_data='CHOSE_SPEAKER')],
-                [InlineKeyboardButton('Я организатор', callback_data='CHOSE_MANAGER')]]
+    reply_keyboard = [['Boy', 'Girl', 'Other']]
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Расскажи о себе', reply_markup=reply_markup)
+    update.message.reply_text(
+        'Hi! My name is Professor Bot. I will hold a conversation with you. '
+        'Send /cancel to stop talking to me.\n\n'
+        'Are you a boy or a girl?',
+        reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
     return GENDER
 
