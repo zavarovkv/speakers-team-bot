@@ -4,7 +4,7 @@
 import logging
 import os
 
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           ConversationHandler)
 
@@ -14,7 +14,10 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-    reply_keyboard = [['Я спикер', 'Я организатор']]
+    keyboard = [[InlineKeyboardButton('Я спикер', callback_data='SPEAKER'),
+                 InlineKeyboardButton('Я организатор', callback_data='MANAGER')]]
+
+    reply_keyboard = InlineKeyboardMarkup(keyboard)
 
     update.message.reply_text(
         'Привет {username}!\n\n'
@@ -28,8 +31,6 @@ def start(update, context):
         'бренд работодателя как организатор 🙂.\n\n'
         'Все зависит от того, что ты выберешь 👇',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
-
-    return 1
 
 
 def help_command(update, context):
