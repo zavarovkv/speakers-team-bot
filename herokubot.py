@@ -6,6 +6,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 def start(bot, update):
     update.effective_message.reply_text("Hi!")
+    bot.sendMessage(update.message.chat_id, str(update.message.from_user.username))
 
 
 def echo(bot, update):
