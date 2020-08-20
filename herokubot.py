@@ -4,7 +4,9 @@
 import logging
 import os
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
+                          ConversationHandler)
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -12,7 +14,22 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-    update.message.reply_text('Hi!')
+    reply_keyboard = [['Я спикер', 'Я организатор']]
+
+    update.message.reply_text(
+        'Привет {username}!\n\n'
+        'Это Speakers Team — сообщество для всех, кто хочет и готов выступать на '
+        'профильных конференциях и митапах. И организаторов, которые ищут крутых '
+        'спикеров.\n\n'
+        '1. Расскажи о себе или мероприятии.\n\n'
+        '2. Получай приглашения от организаторов конференций или резюме спикеров,'
+        'которые готовы выступать.\n\n',
+        '3. Прокачивай свою репутацию в профессиональном сообществе как спикер или '
+        'бренд работодателя как организатор 🙂.\n\n'
+        'Все зависит от того, что ты выберешь 👇',
+        reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+
+    return 1
 
 
 def help_command(update, context):
