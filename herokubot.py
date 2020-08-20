@@ -11,19 +11,19 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-def start(bot, update, context):
+def start(update, context):
     update.message.reply_text('Hi!')
 
 
-def help_command(bot, update, context):
+def help_command(update, context):
     update.message.reply_text('Help!')
 
 
-def echo(bot, update, context):
+def echo(update, context):
     update.message.reply_text(update.message.text)
 
 
-def error(bot, update, context):
+def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
@@ -32,7 +32,7 @@ def main():
     NAME = os.environ.get('NAME')
     PORT = os.environ.get('PORT')
 
-    updater = Updater(TOKEN)
+    updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
     # Add handlers
