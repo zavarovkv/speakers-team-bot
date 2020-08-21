@@ -68,9 +68,9 @@ def select_track(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    update.callback_query.answer()
-    update.callback_query.edit_message_text(text=text, reply_markup=keyboard)
-
+    # update.callback_query.answer()
+    # update.callback_query.edit_message_text(text=text, reply_markup=keyboard)
+    update.message.reply_text(text=text, reply_markup=keyboard)
     return SELECTING_TRACK
 
 
