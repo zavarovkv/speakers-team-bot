@@ -14,9 +14,9 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(1, 3))
-SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(4, 7))
-START_OVER = 8
+SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(3))
+SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(3, 7))
+START_OVER = 7
 
 
 def start(update, context):
