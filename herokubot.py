@@ -41,8 +41,6 @@ def start(update, context):
 
 
 def start2(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
-    
     buttons = [[
         InlineKeyboardButton('Я спикер', callback_data=str(IAM_SPEAKER))
     ], [
@@ -83,6 +81,7 @@ def stop(update, context):
 
     return END
 
+
 def main():
     TOKEN = os.environ.get('TOKEN')
     NAME = os.environ.get('NAME')
@@ -112,7 +111,9 @@ def main():
             SELECTING_ACTION: selection_handlers
         },
 
-        fallbacks=[CommandHandler('stop', stop)]
+        fallbacks=[CommandHandler('stop', stop)],
+
+        allow_reentry=True
     )
 
     dp.add_handler(CommandHandler("start", start))
