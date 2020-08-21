@@ -78,7 +78,7 @@ def main():
 
         states={
             SELECTING_ACTION: selection_handlers
-        },
+        }
 
     )
 
