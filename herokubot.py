@@ -17,17 +17,32 @@ logger = logging.getLogger(__name__)
 
 GENDER, PHOTO, LOCATION, BIO = range(4)
 
+SELECTING_ACTION, SPEAKER, MANAGER = map(chr, range(4, 7))
+
+START_OVER = map(chr, range(1))
+
 
 def start(update, context):
-    keyboard = [[InlineKeyboardButton('Option 1', callback_data='SPEAKER')],
-                [InlineKeyboardButton('Option 3', callback_data='MANAGER')]]
+    buttons = [[
+        InlineKeyboardButton('Я спикер', callback_data=str(SPEAKER))
+    ], [
+        InlineKeyboardButton('Я организатор', callback_data=str(MANAGER))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    if context.user_data.get(START_OVER):
+        update.callback_query.answer()
+        update.callback_query.edit_message_text('Нужно понять что здесь написать', reply_markup=keyboard)
+    else:
+        update.message.reply_text('Нужно выбрать кто ты:', reply_markup=keyboard)
 
-    update.message.reply_text('Please choose:', reply_markup=reply_markup)
+    context.user_data[START_OVER] = False
+    return SELECTING_ACTION
 
 
 def gender(update, context):
+    user = update.message.from_user
+    logger.info("Gender of %s: %s", user.first_name, update.message.text)
     update.message.reply_text('I see! Please send me a photo of yourself, '
                               'so I know what you look like, or send /skip if you don\'t want to.',
                               reply_markup=ReplyKeyboardRemove())
@@ -102,7 +117,7 @@ def main():
 
     # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
     conv_handler = ConversationHandler(
-        entry_points=[CallbackQueryHandler(gender)],
+        entry_points=[CommandHandler('start', start)],
 
         states={
             GENDER: [CommandHandler('SPEAKER', gender)],
@@ -119,10 +134,7 @@ def main():
         fallbacks=[CommandHandler('cancel', cancel)]
     )
 
-    start_handler = CommandHandler('start', start)
-
     dp.add_handler(conv_handler)
-    dp.add_handler(start_handler)
 
     # Start the webhook
     updater.start_webhook(listen="0.0.0.0",
