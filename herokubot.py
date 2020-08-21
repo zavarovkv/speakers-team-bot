@@ -41,7 +41,6 @@ def start(update, context):
 
 
 def select_track(update, context):
-    text = 'Пока какой-то текст'
     buttons = [[
         InlineKeyboardButton(text='Программирование', callback_data=str(TRACK_PROGRAMMING)),
         InlineKeyboardButton(text='Менеджмент', callback_data=str(TRACK_MANAGEMENT)),
@@ -50,7 +49,7 @@ def select_track(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='Нужно выбрать кто ты:\nЯ спикер', reply_markup=keyboard)
+    update.callback_query.edit_message_text(reply_markup=ReplyKeyboardRemove())
 
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
