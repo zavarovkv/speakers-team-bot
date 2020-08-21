@@ -14,13 +14,33 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(3))
+IAM_NEW_USER, IAM_OLD_USER = 101, 102
+
+START, SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(3))
 SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(3, 7))
 START_OVER = 7
 END = ConversationHandler.END
 
 
 def start(update, context):
+    is_new_user = True
+
+    if is_new_user:
+        buttons = [[
+            InlineKeyboardButton('Я первый раз', callback_data=str(IAM_NEW_USER))
+        ], [
+            InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
+        ]]
+        keyboard = InlineKeyboardMarkup(buttons)
+        update.message.reply_text('👋 Hey, Давайте активируем SpeakersTeam — это займет меньше минуты.',
+                                  reply_markup=keyboard)
+    else:
+        pass
+
+    return START
+
+
+def start2(update, context):
     buttons = [[
         InlineKeyboardButton('Я спикер', callback_data=str(IAM_SPEAKER))
     ], [
