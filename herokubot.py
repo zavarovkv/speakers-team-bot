@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(3))
 SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(3, 7))
 START_OVER = 7
+END = ConversationHandler.END
 
 
 def start(update, context):
@@ -53,6 +54,11 @@ def select_track(update, context):
     return SELECTING_TRACK
 
 
+def stop(update, context):
+    update.message.reply_text('Okay, bye.')
+
+    return END
+
 def main():
     TOKEN = os.environ.get('TOKEN')
     NAME = os.environ.get('NAME')
@@ -66,7 +72,9 @@ def main():
 
         states={
 
-        }
+        },
+
+        fallbacks=[CommandHandler('stop', stop)]
     )
 
     selection_handlers = [
@@ -78,8 +86,9 @@ def main():
 
         states={
             SELECTING_ACTION: selection_handlers
-        }
+        },
 
+        fallbacks=[CommandHandler('stop', stop)]
     )
 
     dp.add_handler(conv_handler)
