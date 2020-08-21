@@ -62,8 +62,7 @@ def main():
     dp = updater.dispatcher
 
     add_speaker_conv = ConversationHandler(
-        entry_points=[CallbackQueryHandler(select_track(),
-                                           pattern='^' + str(IAM_SPEAKER) + '$')],
+        entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_SPEAKER) + '$')],
 
         states={
 
