@@ -32,7 +32,7 @@ def start(update, context):
             InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
         ]]
         keyboard = InlineKeyboardMarkup(buttons)
-        update.message.reply_text('👋 Hey! Давайте активируем *SpeakersTeam* — это займет меньше минуты.',
+        update.message.reply_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
                                   reply_markup=keyboard)
     else:
         pass
@@ -102,7 +102,7 @@ def main():
     ]
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[CommandHandler('start2', start2)],
 
         states={
             SELECTING_ACTION: selection_handlers
@@ -111,6 +111,7 @@ def main():
         fallbacks=[CommandHandler('stop', stop)]
     )
 
+    dp.add_handler(CommandHandler("start", start))
     dp.add_handler(conv_handler)
 
     # Start the webhook
