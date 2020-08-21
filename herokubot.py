@@ -40,25 +40,6 @@ def start(update, context):
     return START
 
 
-def start2(update, context):
-    buttons = [[
-        InlineKeyboardButton('Я спикер', callback_data=str(IAM_SPEAKER))
-    ], [
-        InlineKeyboardButton('Я организатор', callback_data=str(IAM_MANAGER))
-    ]]
-    keyboard = InlineKeyboardMarkup(buttons)
-
-    if context.user_data.get(START_OVER):
-        update.callback_query.answer()
-        update.callback_query.edit_message_text('Нужно понять что здесь написать', reply_markup=keyboard)
-    else:
-        update.message.reply_text('Нужно выбрать кто ты:', reply_markup=keyboard)
-
-    context.user_data[START_OVER] = False
-
-    return SELECTING_ACTION
-
-
 def select_track(update, context):
     text = 'Пока какой-то текст'
     buttons = [[
@@ -90,25 +71,11 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
-    add_speaker_conv = ConversationHandler(
-        entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_SPEAKER) + '$')],
+    add_new_user_conv = ConversationHandler(
+        entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_NEW_USER) + '$')],
 
         states={
 
-        },
-
-        fallbacks=[CommandHandler('stop', stop)]
-    )
-
-    selection_handlers = [
-        add_speaker_conv
-    ]
-
-    conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start2', start2)],
-
-        states={
-            SELECTING_ACTION: selection_handlers
         },
 
         fallbacks=[CommandHandler('stop', stop)],
@@ -116,7 +83,22 @@ def main():
         allow_reentry=True
     )
 
-    dp.add_handler(CommandHandler("start", start))
+    selection_handlers = [
+        add_new_user_conv
+    ]
+
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+
+        states={
+            START: selection_handlers
+        },
+
+        fallbacks=[CommandHandler('stop', stop)],
+
+        allow_reentry=True
+    )
+
     dp.add_handler(conv_handler)
 
     # Start the webhook
