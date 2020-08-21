@@ -68,8 +68,8 @@ def select_track(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    #update.callback_query.answer()
-    #update.callback_query.edit_message_text(text=text, reply_markup=keyboard)
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='Нужно выбрать кто ты:\nЯ спикер', reply_markup=keyboard)
 
     context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
