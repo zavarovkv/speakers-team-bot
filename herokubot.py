@@ -12,21 +12,18 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-
 logger = logging.getLogger(__name__)
 
-GENDER, PHOTO, LOCATION, BIO = range(4)
-
-SELECTING_ACTION, SPEAKER, MANAGER = map(chr, range(4, 7))
-
-START_OVER = map(chr, range(1))
+SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(1, 3))
+SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(4, 7))
+START_OVER = 8
 
 
 def start(update, context):
     buttons = [[
-        InlineKeyboardButton('Я спикер', callback_data=str(SPEAKER))
+        InlineKeyboardButton('Я спикер', callback_data=str(IAM_SPEAKER))
     ], [
-        InlineKeyboardButton('Я организатор', callback_data=str(MANAGER))
+        InlineKeyboardButton('Я организатор', callback_data=str(IAM_MANAGER))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -37,74 +34,23 @@ def start(update, context):
         update.message.reply_text('Нужно выбрать кто ты:', reply_markup=keyboard)
 
     context.user_data[START_OVER] = False
+
     return SELECTING_ACTION
 
 
-def gender(update, context):
-    user = update.message.from_user
-    logger.info("Gender of %s: %s", user.first_name, update.message.text)
-    update.message.reply_text('I see! Please send me a photo of yourself, '
-                              'so I know what you look like, or send /skip if you don\'t want to.',
-                              reply_markup=ReplyKeyboardRemove())
+def select_track(update, context):
+    text = 'Пока какой-то текст'
+    buttons = [[
+        InlineKeyboardButton(text='Программирование', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='Менеджмент', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='Маркетинг', callback_data=str(TRACK_MARKETING))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
 
-    return PHOTO
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text=text, reply_markup=keyboard)
 
-
-def photo(update, context):
-    user = update.message.from_user
-    photo_file = update.message.photo[-1].get_file()
-    photo_file.download('user_photo.jpg')
-    logger.info("Photo of %s: %s", user.first_name, 'user_photo.jpg')
-    update.message.reply_text('Gorgeous! Now, send me your location please, '
-                              'or send /skip if you don\'t want to.')
-
-    return LOCATION
-
-
-def skip_photo(update, context):
-    user = update.message.from_user
-    logger.info("User %s did not send a photo.", user.first_name)
-    update.message.reply_text('I bet you look great! Now, send me your location please, '
-                              'or send /skip.')
-
-    return LOCATION
-
-
-def location(update, context):
-    user = update.message.from_user
-    user_location = update.message.location
-    logger.info("Location of %s: %f / %f", user.first_name, user_location.latitude,
-                user_location.longitude)
-    update.message.reply_text('Maybe I can visit you sometime! '
-                              'At last, tell me something about yourself.')
-
-    return BIO
-
-
-def skip_location(update, context):
-    user = update.message.from_user
-    logger.info("User %s did not send a location.", user.first_name)
-    update.message.reply_text('You seem a bit paranoid! '
-                              'At last, tell me something about yourself.')
-
-    return BIO
-
-
-def bio(update, context):
-    user = update.message.from_user
-    logger.info("Bio of %s: %s", user.first_name, update.message.text)
-    update.message.reply_text('Thank you! I hope we can talk again some day.')
-
-    return ConversationHandler.END
-
-
-def cancel(update, context):
-    user = update.message.from_user
-    logger.info("User %s canceled the conversation.", user.first_name)
-    update.message.reply_text('Bye! I hope we can talk again some day.',
-                              reply_markup=ReplyKeyboardRemove())
-
-    return ConversationHandler.END
+    return SELECTING_TRACK
 
 
 def main():
@@ -115,23 +61,26 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
-    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
+    add_speaker_conv = ConversationHandler(
+        entry_points=[CallbackQueryHandler(select_track(),
+                                           pattern='^' + str(IAM_SPEAKER) + '$')],
+
+        states={
+
+        }
+    )
+
+    selection_handlers = [
+        add_speaker_conv
+    ]
+
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
 
         states={
-            GENDER: [CommandHandler('SPEAKER', gender)],
-
-            PHOTO: [MessageHandler(Filters.photo, photo),
-                    CommandHandler('skip', skip_photo)],
-
-            LOCATION: [MessageHandler(Filters.location, location),
-                       CommandHandler('skip', skip_location)],
-
-            BIO: [MessageHandler(Filters.text & ~Filters.command, bio)]
+            SELECTING_ACTION: selection_handlers
         },
 
-        fallbacks=[CommandHandler('cancel', cancel)]
     )
 
     dp.add_handler(conv_handler)
