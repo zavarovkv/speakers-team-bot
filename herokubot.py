@@ -32,7 +32,7 @@ def start(update, context):
             InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
         ]]
         keyboard = InlineKeyboardMarkup(buttons)
-        update.message.reply_text('👋 Hey, Давайте активируем SpeakersTeam — это займет меньше минуты.',
+        update.message.reply_text('👋 Hey! Давайте активируем *SpeakersTeam* — это займет меньше минуты.',
                                   reply_markup=keyboard)
     else:
         pass
