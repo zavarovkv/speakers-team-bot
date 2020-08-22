@@ -86,7 +86,7 @@ def main():
         # entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_NEW_USER) + '$')],
         entry_points=[CallbackQueryHandler(start_hide_keyboard)],
         states={
-
+            HIDE_KEYBOARD: [MessageHandler(Filters.text, select_track)]
         },
 
         fallbacks=[CommandHandler('stop', stop)],
