@@ -74,7 +74,7 @@ def select_track_programming(update, context):
         InlineKeyboardButton(text='☐ С++', callback_data=str(TRACK_MARKETING)),
         InlineKeyboardButton(text='☐ С#', callback_data=str(TRACK_MARKETING))
     ], [
-        InlineKeyboardButton(text='◀ Назад', callback_data=str(456)),
+        InlineKeyboardButton(text='◀ Назад', callback_data=str(SELECTING_TRACK_ACTION)),
         InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
