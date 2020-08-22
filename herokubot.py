@@ -20,6 +20,7 @@ START, SELECTING_TRACK_ACTION, IAM_SPEAKER, IAM_MANAGER, HIDE_KEYBOARD = map(chr
 SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(5, 9))
 START_OVER = 9
 GO_TO_SELECT_TRACK = 10
+SELECT_TRACK_FROM_START = 11
 END = ConversationHandler.END
 
 
@@ -35,6 +36,8 @@ def start(update, context):
         keyboard = InlineKeyboardMarkup(buttons)
         update.message.reply_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
                                   reply_markup=keyboard)
+
+        context.user_data[SELECT_TRACK_FROM_START] = True
     else:
         pass
 
@@ -42,9 +45,10 @@ def start(update, context):
 
 
 def select_track(update, context):
-    # Hide keyboard
-    update.callback_query.answer()
-    update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
+    if context.user_data[SELECT_TRACK_FROM_START]:
+        # Hide keyboard
+        update.callback_query.answer()
+        update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
     # Send general message
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
@@ -82,6 +86,8 @@ def select_track_programming(update, context):
 
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
+
+    context.user_data[SELECT_TRACK_FROM_START] = False
 
     return 1001
 
