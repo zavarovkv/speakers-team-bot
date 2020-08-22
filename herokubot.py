@@ -77,7 +77,8 @@ def select_track_programming(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    update.message.reply_text('👨🏼‍💻 Сфера', reply_markup=keyboard)
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
 
     return 1001
 
