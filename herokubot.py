@@ -47,7 +47,7 @@ def start_hide_keyboard(update, context):
 
     # Send general message
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                             text='Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
+                             text='⚙️ Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
 
     # Send question about track
     buttons = [[
@@ -58,7 +58,7 @@ def start_hide_keyboard(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                             text='Сфера',
+                             text='👨🏼‍💻 Сфера',
                              reply_markup=keyboard)
 
     return HIDE_KEYBOARD
