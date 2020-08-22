@@ -88,7 +88,8 @@ def main():
     dp = updater.dispatcher
 
     add_new_user_conv = ConversationHandler(
-        entry_points=[CallbackQueryHandler(select_track)],
+        entry_points=[CallbackQueryHandler(select_track,
+                                           pattern='^' + str(IAM_NEW_USER) + '$')],
         states={
             SELECTING_TRACK_ACTION: [CallbackQueryHandler(select_track_programming,
                                                           pattern='^' + str(TRACK_PROGRAMMING) + '$')]
