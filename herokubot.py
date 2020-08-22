@@ -45,6 +45,16 @@ def start(update, context):
 
 
 def select_track(update, context):
+
+    buttons = [[
+        InlineKeyboardButton(text='☐ Программирование ↵', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='▣ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='Далее ▶️', callback_data=str(123))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
     if context.user_data[SELECT_TRACK_FROM_START]:
         # Hide keyboard
         update.callback_query.answer()
@@ -54,28 +64,12 @@ def select_track(update, context):
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
                                  text='⚙️ Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
 
-        # Send question about track
-        buttons = [[
-            InlineKeyboardButton(text='☐ Программирование ↵', callback_data=str(TRACK_PROGRAMMING)),
-            InlineKeyboardButton(text='▣ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
-            InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
-        ], [
-            InlineKeyboardButton(text='Далее ▶️', callback_data=str(123))
-        ]]
-        keyboard = InlineKeyboardMarkup(buttons)
-
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
                                  text='👨🏼‍💻 Сфера',
                                  reply_markup=keyboard)
     else:
-        buttons = [[
-            InlineKeyboardButton('Я первый раз', callback_data=str(IAM_NEW_USER))
-        ], [
-            InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
-        ]]
-        keyboard = InlineKeyboardMarkup(buttons)
         update.callback_query.answer()
-        update.callback_query.edit_message_text(text='👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
+        update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера',
                                                 reply_markup=keyboard)
 
     return SELECTING_TRACK_ACTION
