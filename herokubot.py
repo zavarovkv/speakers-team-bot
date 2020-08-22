@@ -44,9 +44,9 @@ def select_track(update, context):
     update.callback_query.answer()
     update.callback_query.edit_message_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.')
 
-    context.bot.send_message(chat_id=update.effective_chat.id,
+    context.bot.send_message(chat_id=update.callback_query.from_user.id,
                              text='Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
-    context.bot.send_message(chat_id=update.effective_chat.id, text='Сфера')
+    context.bot.send_message(chat_id=update.callback_query.from_user.id, text='Сфера')
 
     buttons = [[
         InlineKeyboardButton(text='Программирование', callback_data=str(TRACK_PROGRAMMING)),
@@ -54,7 +54,7 @@ def select_track(update, context):
         InlineKeyboardButton(text='Маркетинг', callback_data=str(TRACK_MARKETING))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
-    
+
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='Сфера', reply_markup=keyboard)
 
