@@ -74,8 +74,9 @@ def select_track(update, context):
             InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
         ]]
         keyboard = InlineKeyboardMarkup(buttons)
-        update.message.reply_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
-                                  reply_markup=keyboard)
+        update.callback_query.answer()
+        update.callback_query.edit_message('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
+                                           reply_markup=keyboard)
 
     return SELECTING_TRACK_ACTION
 
