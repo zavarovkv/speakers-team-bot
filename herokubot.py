@@ -51,10 +51,13 @@ def select_track(update, context):
         InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(1))
     ], [
         InlineKeyboardButton(text='☐ Management ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_MARKETING))
-    ], [
-        InlineKeyboardButton(text='▣ Design & UX', callback_data=str(TRACK_MANAGEMENT)),
         InlineKeyboardButton(text='☐ Tech Recruitment', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='▣ Design & UX', callback_data=str(TRACK_MANAGEMENT))
+    ], [
+        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_MARKETING)),
+        InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_MARKETING))
     ], [
         InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
     ]]
@@ -96,8 +99,7 @@ def select_track_programming(update, context):
         InlineKeyboardButton(text='☐ PHP', callback_data=str(TRACK_MARKETING))
     ], [
         InlineKeyboardButton(text='☐ JS/Front-end', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ JS/Back-end', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ JS/Back-end', callback_data=str(TRACK_MANAGEMENT))
     ], [
         InlineKeyboardButton(text='◀ Назад', callback_data=str(GO_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
