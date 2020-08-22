@@ -49,7 +49,7 @@ def start_hide_keyboard(update, context):
 
 def select_track(update, context):
     update.callback_query.answer()
-    update.callback_query.edit_message_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.')
+    update.callback_query.edit_message_text('asdasdas')
 
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
                              text='Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
@@ -86,7 +86,7 @@ def main():
         # entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_NEW_USER) + '$')],
         entry_points=[CallbackQueryHandler(start_hide_keyboard)],
         states={
-            HIDE_KEYBOARD: [MessageHandler(Filters.text, select_track)]
+            HIDE_KEYBOARD: [CallbackQueryHandler(select_track)]
         },
 
         fallbacks=[CommandHandler('stop', stop)],
