@@ -75,8 +75,8 @@ def select_track(update, context):
         ]]
         keyboard = InlineKeyboardMarkup(buttons)
         update.callback_query.answer()
-        update.callback_query.edit_message('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
-                                           reply_markup=keyboard)
+        update.callback_query.edit_message_text(text='👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
+                                                reply_markup=keyboard)
 
     return SELECTING_TRACK_ACTION
 
