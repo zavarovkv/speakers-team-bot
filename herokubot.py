@@ -44,6 +44,9 @@ def start_hide_keyboard(update, context):
     update.callback_query.answer()
     update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
+    context.bot.send_message(chat_id=update.callback_query.from_user.id,
+                             text='Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
+
     return HIDE_KEYBOARD
 
 
