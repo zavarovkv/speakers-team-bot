@@ -47,11 +47,16 @@ def start(update, context):
 def select_track(update, context):
 
     buttons = [[
-        InlineKeyboardButton(text='☐ Программирование ↵', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='▣ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ Engineering ↵', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(1))
     ], [
-        InlineKeyboardButton(text='Далее ▶️', callback_data=str(123))
+        InlineKeyboardButton(text='☐ Management ↵', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='▣ Design & UX', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ Tech Recruitment', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
