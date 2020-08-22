@@ -50,23 +50,32 @@ def select_track(update, context):
         update.callback_query.answer()
         update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
-    # Send general message
-    context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                             text='⚙️ Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
+        # Send general message
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,
+                                 text='⚙️ Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
 
-    # Send question about track
-    buttons = [[
-        InlineKeyboardButton(text='☐ Программирование ↵', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='▣ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
-    ], [
-        InlineKeyboardButton(text='Далее ▶️', callback_data=str(123))
-    ]]
-    keyboard = InlineKeyboardMarkup(buttons)
+        # Send question about track
+        buttons = [[
+            InlineKeyboardButton(text='☐ Программирование ↵', callback_data=str(TRACK_PROGRAMMING)),
+            InlineKeyboardButton(text='▣ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
+            InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
+        ], [
+            InlineKeyboardButton(text='Далее ▶️', callback_data=str(123))
+        ]]
+        keyboard = InlineKeyboardMarkup(buttons)
 
-    context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                             text='👨🏼‍💻 Сфера',
-                             reply_markup=keyboard)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,
+                                 text='👨🏼‍💻 Сфера',
+                                 reply_markup=keyboard)
+    else:
+        buttons = [[
+            InlineKeyboardButton('Я первый раз', callback_data=str(IAM_NEW_USER))
+        ], [
+            InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
+        ]]
+        keyboard = InlineKeyboardMarkup(buttons)
+        update.message.reply_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
+                                  reply_markup=keyboard)
 
     return SELECTING_TRACK_ACTION
 
