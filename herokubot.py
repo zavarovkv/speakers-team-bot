@@ -67,10 +67,6 @@ def select_track(update, context):
 
 
 def select_track_programming(update, context):
-    # Hide keyboard
-    update.callback_query.answer()
-    update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
-
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
                              text='123')
 
