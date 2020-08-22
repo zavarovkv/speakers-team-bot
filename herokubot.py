@@ -52,10 +52,10 @@ def start_hide_keyboard(update, context):
     # Send question about track
     buttons = [[
         InlineKeyboardButton(text='☐ Программирование ↵', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='◻ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='▣ Менеджмент ↵', callback_data=str(TRACK_MANAGEMENT)),
         InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
     ], [
-        InlineKeyboardButton(text='▣ Далее', callback_data=str(123))
+        InlineKeyboardButton(text='Далее ▶️', callback_data=str(123))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
