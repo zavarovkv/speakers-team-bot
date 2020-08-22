@@ -16,9 +16,9 @@ logger = logging.getLogger(__name__)
 
 IAM_NEW_USER, IAM_OLD_USER = 101, 102
 
-START, SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER = map(chr, range(4))
-SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(4, 8))
-START_OVER = 8
+START, SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER, HIDE_KEYBOARD = map(chr, range(5))
+SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(5, 9))
+START_OVER = 9
 END = ConversationHandler.END
 
 
@@ -38,6 +38,13 @@ def start(update, context):
         pass
 
     return START
+
+
+def start_hide_keyboard(update, context):
+    update.callback_query.answer()
+    update.callback_query.editMessageReplyMarkup()
+
+    return HIDE_KEYBOARD
 
 
 def select_track(update, context):
@@ -76,8 +83,8 @@ def main():
     dp = updater.dispatcher
 
     add_new_user_conv = ConversationHandler(
-        entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_NEW_USER) + '$')],
-
+        # entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_NEW_USER) + '$')],
+        entry_points=[CallbackQueryHandler(start_hide_keyboard)],
         states={
 
         },
