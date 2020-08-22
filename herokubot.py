@@ -41,11 +41,25 @@ def start(update, context):
 
 
 def start_hide_keyboard(update, context):
+    # Hide keyboard
     update.callback_query.answer()
     update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
+    # Send general message
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
                              text='Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
+
+    # Send question about track
+    buttons = [[
+        InlineKeyboardButton(text='Программирование', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='Менеджмент', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='Маркетинг', callback_data=str(TRACK_MARKETING))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    context.bot.send_message(chat_id=update.callback_query.from_user.id,
+                             text='Сфера',
+                             reply_markup=keyboard)
 
     return HIDE_KEYBOARD
 
