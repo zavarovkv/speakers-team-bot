@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 IAM_NEW_USER, IAM_OLD_USER = 101, 102
 
-START, SELECTING_ACTION, IAM_SPEAKER, IAM_MANAGER, HIDE_KEYBOARD = map(chr, range(5))
+START, SELECTING_TRACK_ACTION, IAM_SPEAKER, IAM_MANAGER, HIDE_KEYBOARD = map(chr, range(5))
 SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(5, 9))
 START_OVER = 9
 END = ConversationHandler.END
@@ -40,7 +40,7 @@ def start(update, context):
     return START
 
 
-def start_hide_keyboard(update, context):
+def select_track(update, context):
     # Hide keyboard
     update.callback_query.answer()
     update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
@@ -63,28 +63,15 @@ def start_hide_keyboard(update, context):
                              text='👨🏼‍💻 Сфера',
                              reply_markup=keyboard)
 
-    return HIDE_KEYBOARD
+    return SELECTING_TRACK_ACTION
 
 
-def select_track(update, context):
+def select_track_programming(update, context):
+    # Hide keyboard
     update.callback_query.answer()
-    update.callback_query.edit_message_text('asdasdas')
+    update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
-    context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                             text='Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
-    context.bot.send_message(chat_id=update.callback_query.from_user.id, text='Сфера')
-
-    buttons = [[
-        InlineKeyboardButton(text='Программирование', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='Менеджмент', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='Маркетинг', callback_data=str(TRACK_MARKETING))
-    ]]
-    keyboard = InlineKeyboardMarkup(buttons)
-
-    update.callback_query.answer()
-    update.callback_query.edit_message_text(text='Сфера', reply_markup=keyboard)
-
-    return SELECTING_TRACK
+    return 1001
 
 
 def stop(update, context):
@@ -102,10 +89,10 @@ def main():
     dp = updater.dispatcher
 
     add_new_user_conv = ConversationHandler(
-        # entry_points=[CallbackQueryHandler(select_track, pattern='^' + str(IAM_NEW_USER) + '$')],
-        entry_points=[CallbackQueryHandler(start_hide_keyboard)],
+        entry_points=[CallbackQueryHandler(select_track)],
         states={
-            HIDE_KEYBOARD: [CallbackQueryHandler(select_track)]
+            SELECTING_TRACK_ACTION: [CallbackQueryHandler(select_track_programming,
+                                                          pattern='^' + str(TRACK_PROGRAMMING) + '$')]
         },
 
         fallbacks=[CommandHandler('stop', stop)],
