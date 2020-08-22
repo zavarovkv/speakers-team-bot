@@ -19,6 +19,7 @@ IAM_NEW_USER, IAM_OLD_USER = 101, 102
 START, SELECTING_TRACK_ACTION, IAM_SPEAKER, IAM_MANAGER, HIDE_KEYBOARD = map(chr, range(5))
 SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(5, 9))
 START_OVER = 9
+GO_TO_SELECT_TRACK = 10
 END = ConversationHandler.END
 
 
@@ -74,7 +75,7 @@ def select_track_programming(update, context):
         InlineKeyboardButton(text='☐ С++', callback_data=str(TRACK_MARKETING)),
         InlineKeyboardButton(text='☐ С#', callback_data=str(TRACK_MARKETING))
     ], [
-        InlineKeyboardButton(text='◀ Назад', callback_data=str(SELECTING_TRACK_ACTION)),
+        InlineKeyboardButton(text='◀ Назад', callback_data=str(GO_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
@@ -107,7 +108,10 @@ def main():
                                                           pattern='^' + str(TRACK_PROGRAMMING) + '$')]
         },
 
-        fallbacks=[CommandHandler('stop', stop)],
+        fallbacks=[
+            CallbackQueryHandler(select_track, pattern='^' + str(GO_TO_SELECT_TRACK) + '$'),
+            CommandHandler('stop', stop)
+        ],
 
         allow_reentry=True
     )
