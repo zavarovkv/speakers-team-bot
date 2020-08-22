@@ -67,8 +67,23 @@ def select_track(update, context):
 
 
 def select_track_programming(update, context):
+    # Hide prev keyboard
+    update.callback_query.answer()
+    update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
+
+    # Send question about track
+    buttons = [[
+        InlineKeyboardButton(text='☐ Android ↵', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='▣ iOS ↵', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='Назад ▶️', callback_data=str(123))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
     context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                             text='123')
+                             text='👨🏼‍💻 Сфера',
+                             reply_markup=keyboard)
 
     return 1001
 
