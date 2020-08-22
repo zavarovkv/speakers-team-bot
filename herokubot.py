@@ -69,11 +69,13 @@ def select_track(update, context):
 def select_track_programming(update, context):
     # Send question about track
     buttons = [[
-        InlineKeyboardButton(text='☐ Android ↵', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='▣ iOS ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ Маркетинг ↵', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ Android', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='☐ iOS', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ С++', callback_data=str(TRACK_MARKETING)),
+        InlineKeyboardButton(text='☐ С#', callback_data=str(TRACK_MARKETING))
     ], [
-        InlineKeyboardButton(text='Назад ▶️', callback_data=str(123))
+        InlineKeyboardButton(text='◀ Назад', callback_data=str(456)),
+        InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
