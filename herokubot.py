@@ -83,10 +83,21 @@ def select_track(update, context):
 def select_track_programming(update, context):
     # Send question about track
     buttons = [[
-        InlineKeyboardButton(text='☐ Android', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ iOS', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ С++', callback_data=str(TRACK_MARKETING)),
+        InlineKeyboardButton(text='☐ Java / Scala', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='☐ Python', callback_data=str(TRACK_MANAGEMENT)),
         InlineKeyboardButton(text='☐ С#', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='☐ iOS', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='☐ Android', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ C/C++', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='☐ Go', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='☐ Ruby', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ PHP', callback_data=str(TRACK_MARKETING))
+    ], [
+        InlineKeyboardButton(text='☐ JS/Front-end', callback_data=str(TRACK_PROGRAMMING)),
+        InlineKeyboardButton(text='☐ JS/Back-end', callback_data=str(TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_MANAGEMENT)),
     ], [
         InlineKeyboardButton(text='◀ Назад', callback_data=str(GO_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
