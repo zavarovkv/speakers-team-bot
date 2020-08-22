@@ -42,7 +42,7 @@ def start(update, context):
 
 def start_hide_keyboard(update, context):
     update.callback_query.answer()
-    update.callback_query.editMessageReplyMarkup()
+    update.callback_query.edit_message_reply_markup()
 
     return HIDE_KEYBOARD
 
