@@ -108,19 +108,19 @@ def change_button_type(btn_code, context):
 def select_track_engineering(update, context):
     buttons = [[
         InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
-        InlineKeyboardButton(text='☐ Python', callback_data=str(ENGIN_PY)),
-        InlineKeyboardButton(text='☐ С#', callback_data=str(ENGIN_CSH))
+        InlineKeyboardButton(text=button_type(ENGIN_PY, context) + 'Python', callback_data=str(ENGIN_PY)),
+        InlineKeyboardButton(text=button_type(ENGIN_CSH, context) + 'С#', callback_data=str(ENGIN_CSH))
     ], [
-        InlineKeyboardButton(text='☐ iOS', callback_data=str(ENGIN_IOS)),
-        InlineKeyboardButton(text='☐ Android', callback_data=str(ENGIN_ANDROID)),
-        InlineKeyboardButton(text='☐ C/C++', callback_data=str(ENGIN_CPP))
+        InlineKeyboardButton(text=button_type(ENGIN_IOS, context) + 'iOS', callback_data=str(ENGIN_IOS)),
+        InlineKeyboardButton(text=button_type(ENGIN_ANDROID, context) + 'Android', callback_data=str(ENGIN_ANDROID)),
+        InlineKeyboardButton(text=button_type(ENGIN_CPP, context) + 'C/C++', callback_data=str(ENGIN_CPP))
     ], [
-        InlineKeyboardButton(text='☐ Go', callback_data=str(ENGIN_GO)),
-        InlineKeyboardButton(text='☐ Ruby', callback_data=str(ENGIN_RUBY)),
-        InlineKeyboardButton(text='☐ PHP', callback_data=str(ENGIN_PHP))
+        InlineKeyboardButton(text=button_type(ENGIN_GO, context) + 'Go', callback_data=str(ENGIN_GO)),
+        InlineKeyboardButton(text=button_type(ENGIN_RUBY, context) + 'Ruby', callback_data=str(ENGIN_RUBY)),
+        InlineKeyboardButton(text=button_type(ENGIN_PHP, context) + 'PHP', callback_data=str(ENGIN_PHP))
     ], [
-        InlineKeyboardButton(text='☐ JS / Front-end', callback_data=str(ENGIN_JS_FRONT)),
-        InlineKeyboardButton(text='☐ JS / Back-end', callback_data=str(ENGIN_JS_BACK))
+        InlineKeyboardButton(text=button_type(ENGIN_JS_FRONT, context) + 'JS / Front-end', callback_data=str(ENGIN_JS_FRONT)),
+        InlineKeyboardButton(text=button_type(ENGIN_JS_BACK, context) + 'JS / Back-end', callback_data=str(ENGIN_JS_BACK))
     ], [
         InlineKeyboardButton(text='« Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
@@ -137,12 +137,7 @@ def click_btn_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
     change_button_type(btn_code, context)
-
     select_track_engineering(update, context)
-
-#    query.answer()
-#   query.edit_message_text(text="Selected option: {}".format(query.data))
-    logger.info(update.callback_query)
 
 
 def select_track_data_science(update, context):
