@@ -29,7 +29,7 @@ SELECT_TRACK_FROM_START = 6
 
 TRACK_ENGINEERING_SET = (ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
                          ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
-                         ENGIN_JS_BACK) = map(chr, range(28))
+                         ENGIN_JS_BACK) = map(chr, range(17, 28))
 
 TRACK_DS_SET = (DS_ANALYST, DS_ENGINEER, DS_SIMP_ANALYST,
                 DS_ML_ENGINEER, DS_ML_RESEARCHER) = map(chr, range(28, 33))
