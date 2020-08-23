@@ -111,9 +111,9 @@ def select_track_engineering(update, context):
 
     logger.info(f'btn code={btn_code}')
     logger.info(f'set={TRACK_ENGINEERING_SET}')
-    logger.info(TRACK_ENGINEERING_SET[0])
+    logger.info(list(TRACK_ENGINEERING_SET)[0])
 
-    if btn_code in map(str, range(17, 28)):
+    if btn_code in list(TRACK_ENGINEERING_SET):
         logger.info('True')
         change_button_type(btn_code, context)
     else:
