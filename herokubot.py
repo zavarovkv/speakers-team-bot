@@ -99,6 +99,12 @@ def button_type(btn_code, context):
     return '☐ '
 
 
+def change_button_type(btn_code, context):
+    if btn_code not in context.user_data:
+        context.user_data[btn_code] = False
+    context.user_data[btn_code] = not context.user_data[btn_code]
+
+
 def select_track_engineering(update, context):
     buttons = [[
         InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
@@ -130,7 +136,8 @@ def select_track_engineering(update, context):
 def click_btn_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
-    context.user_data[btn_code] = True
+    change_button_type(btn_code, context)
+    
     select_track_engineering(update, context)
 
 #    query.answer()
@@ -186,7 +193,7 @@ def main():
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
             ],
             SELECTING_ENGINEERING: [
-                CallbackQueryHandler(click_btn_track_engineering, pass_user_data=True)
+                CallbackQueryHandler(click_btn_track_engineering)
             ],
             SELECTING_DATA_SCIENCE: []
 
