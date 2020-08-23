@@ -181,12 +181,12 @@ def main():
         states={
             SELECTING_TRACK_ACTION: [
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(TRACK_ENGINEERING) + '$'),
-                CallbackQueryHandler(select_track_data_science, pattern='^' + str(TRACK_DATA_SCIENCE) + '$')
-            ],
-            SELECTING_ENGINEERING: [
-                CallbackQueryHandler(select_track_engineering),
+                CallbackQueryHandler(select_track_data_science, pattern='^' + str(TRACK_DATA_SCIENCE) + '$'),
                 CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
+            ],
+            SELECTING_ENGINEERING: [
+                CallbackQueryHandler(select_track_engineering)
             ],
             SELECTING_DATA_SCIENCE: []
 
