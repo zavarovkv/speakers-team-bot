@@ -130,8 +130,6 @@ def select_track_engineering(update, context):
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Engineering', reply_markup=keyboard)
 
-    return SELECTING_ENGINEERING
-
 
 def click_btn_track_engineering(update, context):
     query = update.callback_query
