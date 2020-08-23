@@ -123,9 +123,11 @@ def select_track_engineering(update, context):
 
     data = update.callback_query.data
     logger.warning(f'Data: {data}')
-    
+
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Engineering', reply_markup=keyboard)
+
+    return SELECTING_ENGINEERING
 
 
 def select_track_data_science(update, context):
@@ -175,7 +177,9 @@ def main():
                 CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
             ],
-            SELECTING_ENGINEERING: [],
+            SELECTING_ENGINEERING: [
+                CallbackQueryHandler(select_track_engineering)
+            ],
             SELECTING_DATA_SCIENCE: []
 
         },
