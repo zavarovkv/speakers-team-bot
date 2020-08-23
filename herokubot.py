@@ -15,24 +15,24 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Actions
-START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING, SELECTING_DATA_SCIENCE = range(4)
+START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING, SELECTING_DATA_SCIENCE = map(str, range(4))
 
 # Different users
-IAM_NEW_USER, IAM_OLD_USER = range(4, 6)
+IAM_NEW_USER, IAM_OLD_USER = map(str, range(4, 6))
 
-SELECT_TRACK_FROM_START = 6
+SELECT_TRACK_FROM_START = str(6)
 
 # Different tracks
 (TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR,
  TRACK_MARKETING, TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS, SELECT_TRACK_NEXT,
- RETURN_TO_SELECT_TRACK) = range(7, 17)
+ RETURN_TO_SELECT_TRACK) = map(str, range(7, 17))
 
 TRACK_ENGINEERING_SET = (ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
                          ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
-                         ENGIN_JS_BACK) = range(17, 28)
+                         ENGIN_JS_BACK) = map(str, range(17, 28))
 
 TRACK_DS_SET = (DS_ANALYST, DS_ENGINEER, DS_SIMP_ANALYST,
-                DS_ML_ENGINEER, DS_ML_RESEARCHER) = range(28, 33)
+                DS_ML_ENGINEER, DS_ML_RESEARCHER) = map(str, range(28, 33))
 
 
 def start(update, context):
@@ -112,7 +112,7 @@ def select_track_engineering(update, context):
     logger.info(f'btn code={btn_code}')
     logger.info(f'set={TRACK_ENGINEERING_SET}')
 
-    if btn_code in range(17, 28):
+    if btn_code in TRACK_ENGINEERING_SET:
         logger.info('True')
         change_button_type(btn_code, context)
     else:
