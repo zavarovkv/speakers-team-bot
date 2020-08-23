@@ -16,24 +16,21 @@ logger = logging.getLogger(__name__)
 
 (
     # Actions
-    START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING,
+    START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING, SELECTING_DATA_SCIENCE,
 
     # Different users
     IAM_NEW_USER, IAM_OLD_USER,
 
     # Different tracks
-    TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR,
-    TRACK_MARKETING, TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS,
-    SELECT_TRACK_NEXT, RETURN_TO_SELECT_TRACK,
+    TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR, TRACK_MARKETING,
+    TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS, SELECT_TRACK_NEXT, RETURN_TO_SELECT_TRACK,
 
     # Track Engineering
-    ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
-    ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
-    ENGIN_JS_BACK,
+    ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID, ENGIN_CPP, ENGIN_GO,
+    ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT, ENGIN_JS_BACK,
 
     # Track Data Science
-    DATA_ANALYST, DATA_ENGINEER, DATA_SIMP_ANALYST,
-    DATA_ML_ENGINEER, DATA_ML_RESEARCHER,
+    DATA_ANALYST, DATA_ENGINEER, DATA_SIMP_ANALYST, DATA_ML_ENGINEER, DATA_ML_RESEARCHER,
 
     SELECT_TRACK_FROM_START) = map(chr, range(32))
 
@@ -120,8 +117,6 @@ def select_track_engineering(update, context):
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='🔧 Engineering', reply_markup=keyboard)
 
-    return SELECTING_ENGINEERING
-
 
 def select_track_data_science(update, context):
     buttons = [[
@@ -169,7 +164,10 @@ def main():
 
                 CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
-            ]
+            ],
+            SELECTING_ENGINEERING: [],
+            SELECTING_DATA_SCIENCE: []
+
         },
 
         fallbacks=[
