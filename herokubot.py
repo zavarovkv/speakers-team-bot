@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
     # Track Data Science
     DATA_ANALYST, DATA_ENGINEER, DATA_SIMP_ANALYST, DATA_ML_ENGINEER, DATA_ML_RESEARCHER,
 
-    SELECT_TRACK_FROM_START) = map(chr, range(32))
+    SELECT_TRACK_FROM_START) = map(chr, range(33))
 
 
 def start(update, context):
