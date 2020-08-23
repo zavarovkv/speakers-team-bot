@@ -121,7 +121,7 @@ def select_track_engineering(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    data = update.callback_query.data
+    data = str(update.callback_query.data)
     logger.warning(f'Data: {data}')
 
     update.callback_query.answer()
