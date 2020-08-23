@@ -14,27 +14,28 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Actions
-START, SELECTING_TRACK_ACTION = map(chr, range(2))
+(
+    # Actions
+    START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING,
 
-# Different users
-IAM_NEW_USER, IAM_OLD_USER = map(chr, range(2, 4))
+    # Different users
+    IAM_NEW_USER, IAM_OLD_USER,
 
-# Different tracks
-(TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR,
- TRACK_MARKETING, TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS,
- SELECT_TRACK_NEXT, RETURN_TO_SELECT_TRACK) = map(chr, range(4, 14))
+    # Different tracks
+    TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR,
+    TRACK_MARKETING, TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS,
+    SELECT_TRACK_NEXT, RETURN_TO_SELECT_TRACK,
 
-# Track Engineering
-(ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
- ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
- ENGIN_JS_BACK) = map(chr, range(14, 25))
+    # Track Engineering
+    ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
+    ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
+    ENGIN_JS_BACK,
 
-# Track Data Science
-(DATA_ANALYST, DATA_ENGINEER, DATA_SIMP_ANALYST,
- DATA_ML_ENGINEER, DATA_ML_RESEARCHER) = map(chr, range(25, 30))
+    # Track Data Science
+    DATA_ANALYST, DATA_ENGINEER, DATA_SIMP_ANALYST,
+    DATA_ML_ENGINEER, DATA_ML_RESEARCHER,
 
-SELECT_TRACK_FROM_START = 30
+    SELECT_TRACK_FROM_START) = map(chr, range(32))
 
 
 def start(update, context):
@@ -58,7 +59,6 @@ def start(update, context):
 
 
 def select_track(update, context):
-
     buttons = [[
         InlineKeyboardButton(text='☐ Engineering ↵', callback_data=str(TRACK_ENGINEERING)),
         InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(TRACK_DATA_SCIENCE))
@@ -119,6 +119,8 @@ def select_track_engineering(update, context):
 
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
+
+    return SELECTING_ENGINEERING
 
 
 def select_track_data_science(update, context):
