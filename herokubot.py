@@ -104,7 +104,7 @@ def track_type(t_type, context):
 
 
 def is_track_selected(context):
-    if check_track_for_selected(const.TRACK_ENGINEERING):
+    if check_track_for_selected(const.TRACK_ENGINEERING, context):
         return True
     return False
 
