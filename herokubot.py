@@ -69,7 +69,7 @@ def select_track(update, context):
         InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_QA)),
         InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_DEVOPS))
     ], [
-        InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
+        InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -116,8 +116,8 @@ def select_track_engineering(update, context):
         InlineKeyboardButton(text='☐ JS / Front-end', callback_data=str(ENGIN_JS_FRONT)),
         InlineKeyboardButton(text='☐ JS / Back-end', callback_data=str(ENGIN_JS_BACK))
     ], [
-        InlineKeyboardButton(text='◀ Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
-        InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
+        InlineKeyboardButton(text='« Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -139,8 +139,8 @@ def select_track_data_science(update, context):
         InlineKeyboardButton(text='☐ ML Engineer', callback_data=str(DATA_ML_ENGINEER)),
         InlineKeyboardButton(text='☐ ML Researcher', callback_data=str(DATA_ML_RESEARCHER))
     ], [
-        InlineKeyboardButton(text='◀ Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
-        InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
+        InlineKeyboardButton(text='« Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
