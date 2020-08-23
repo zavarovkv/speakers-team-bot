@@ -140,7 +140,7 @@ def select_track_data_science(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера ➜ Data Science', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Data Science', reply_markup=keyboard)
 
 
 def check_selected_track(update, context):
