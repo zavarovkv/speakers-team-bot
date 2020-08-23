@@ -191,7 +191,9 @@ def main():
             SELECTING_DATA_SCIENCE: []
 
         },
-
+        fallbacks={
+            CallbackQueryHandler('stop', stop)
+        },
         allow_reentry=True
     )
 
