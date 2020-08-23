@@ -111,7 +111,8 @@ def select_track_engineering(update, context):
 
     logger.info(f'btn code={btn_code}')
     logger.info(f'set={TRACK_ENGINEERING_SET}')
-    logger.info(list(TRACK_ENGINEERING_SET)[0])
+    x = list(TRACK_ENGINEERING_SET)
+    logger.info(f'list={x}')
 
     if btn_code in list(TRACK_ENGINEERING_SET):
         logger.info('True')
