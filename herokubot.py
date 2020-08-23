@@ -101,7 +101,7 @@ def button_type(btn_code, context):
 
 def select_track_engineering(update, context):
     buttons = [[
-        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
+        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=ENGIN_JAVA),
         InlineKeyboardButton(text='☐ Python', callback_data=str(ENGIN_PY)),
         InlineKeyboardButton(text='☐ С#', callback_data=str(ENGIN_CSH))
     ], [
