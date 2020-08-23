@@ -64,7 +64,7 @@ def select_track(update, context):
         InlineKeyboardButton(text='☐ Tech HR', callback_data=str(TRACK_HR))
     ], [
         InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(TRACK_MARKETING)),
-        InlineKeyboardButton(text='▣ Design & UX', callback_data=str(TRACK_DESIGN))
+        InlineKeyboardButton(text='☐ Design & UX', callback_data=str(TRACK_DESIGN))
     ], [
         InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_QA)),
         InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_DEVOPS))
@@ -92,9 +92,15 @@ def select_track(update, context):
     return SELECTING_TRACK_ACTION
 
 
+def button_type(btn_code, context):
+    if context.user_data[btn_code]:
+        return '▣ '
+    return '☐ '
+
+
 def select_track_engineering(update, context):
     buttons = [[
-        InlineKeyboardButton(text='☐ Java / Scala', callback_data=str(ENGIN_JAVA)),
+        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
         InlineKeyboardButton(text='☐ Python', callback_data=str(ENGIN_PY)),
         InlineKeyboardButton(text='☐ С#', callback_data=str(ENGIN_CSH))
     ], [
@@ -106,8 +112,8 @@ def select_track_engineering(update, context):
         InlineKeyboardButton(text='☐ Ruby', callback_data=str(ENGIN_RUBY)),
         InlineKeyboardButton(text='☐ PHP', callback_data=str(ENGIN_PHP))
     ], [
-        InlineKeyboardButton(text='☐ JS/Front-end', callback_data=str(ENGIN_JS_FRONT)),
-        InlineKeyboardButton(text='☐ JS/Back-end', callback_data=str(ENGIN_JS_BACK))
+        InlineKeyboardButton(text='☐ JS / Front-end', callback_data=str(ENGIN_JS_FRONT)),
+        InlineKeyboardButton(text='☐ JS / Back-end', callback_data=str(ENGIN_JS_BACK))
     ], [
         InlineKeyboardButton(text='◀ Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
