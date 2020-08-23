@@ -93,7 +93,7 @@ def select_track(update, context):
 
 
 def button_type(btn_code, context):
-    if context.user_data[btn_code]:
+    if context.user_data[btn_code] is True:
         return '▣ '
     return '☐ '
 
