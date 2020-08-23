@@ -137,12 +137,12 @@ def click_btn_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
     change_button_type(btn_code, context)
-    
+
     select_track_engineering(update, context)
 
 #    query.answer()
 #   query.edit_message_text(text="Selected option: {}".format(query.data))
-#    logger.info(update.callback_query)
+    logger.info(update.callback_query)
 
 
 def select_track_data_science(update, context):
