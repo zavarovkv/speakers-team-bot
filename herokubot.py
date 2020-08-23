@@ -91,8 +91,9 @@ def change_button_type(btn_code, context):
 def track_type(t_type, context):
     if t_type == const.TRACK_ENGINEERING:
         for val in const.TRACK_ENGINEERING_SET:
-            if context.user_data[val] is True:
-                return '▣ '
+            if val in context.user_data
+                if context.user_data[val] is True:
+                    return '▣ '
     return '☐ '
 
 
