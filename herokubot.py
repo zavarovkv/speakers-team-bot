@@ -121,8 +121,9 @@ def select_track_engineering(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    data = str(update.callback_query.data)
-    logger.warning(f'Data: {data}')
+    query = update.callback_query
+    query.edit_message_text(text="Selected option: {}".format(query.data))
+    logger.warning(f'Data: {query.data}')
 
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Engineering', reply_markup=keyboard)
