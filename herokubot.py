@@ -129,7 +129,8 @@ def select_track_engineering(update, context):
 
 def click_btn_track_engineering(update, context):
     query = update.callback_query
-    logger.warning("Selected option: {}".format(query.data))
+    query.answer()
+    query.edit_message_text(text="Selected option: {}".format(query.data))
 
 
 def select_track_data_science(update, context):
