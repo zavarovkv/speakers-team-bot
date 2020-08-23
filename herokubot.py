@@ -101,7 +101,7 @@ def button_type(btn_code, context):
 
 def select_track_engineering(update, context):
     buttons = [[
-        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=ENGIN_JAVA),
+        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
         InlineKeyboardButton(text='☐ Python', callback_data=str(ENGIN_PY)),
         InlineKeyboardButton(text='☐ С#', callback_data=str(ENGIN_CSH))
     ], [
@@ -129,9 +129,13 @@ def select_track_engineering(update, context):
 
 def click_btn_track_engineering(update, context):
     query = update.callback_query
-    query.answer()
-    query.edit_message_text(text="Selected option: {}".format(query.data))
-    logger.info(update.callback_query)
+    btn_code = query.data
+    context.user_data[btn_code] = True
+    select_track_engineering(update, context)
+
+#    query.answer()
+#   query.edit_message_text(text="Selected option: {}".format(query.data))
+#    logger.info(update.callback_query)
 
 
 def select_track_data_science(update, context):
