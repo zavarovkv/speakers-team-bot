@@ -157,8 +157,10 @@ def main():
         entry_points=[CallbackQueryHandler(select_track,
                                            pattern='^' + str(IAM_NEW_USER) + '$')],
         states={
-            SELECTING_TRACK_ACTION: [CallbackQueryHandler(select_track_engineering,
-                                                          pattern='^' + str(TRACK_ENGINEERING) + '$')]
+            SELECTING_TRACK_ACTION: [
+                CallbackQueryHandler(select_track_engineering, pattern='^' + str(TRACK_ENGINEERING) + '$'),
+                CallbackQueryHandler(select_track_engineering, pattern='^' + str(TRACK_DATA_SCIENCE) + '$')
+            ]
         },
 
         fallbacks=[
