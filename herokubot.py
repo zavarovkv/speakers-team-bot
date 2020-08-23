@@ -39,7 +39,8 @@ def start(update, context):
 
 def select_track(update, context):
     buttons = [[
-        InlineKeyboardButton(text='☐ Engineering ↵', callback_data=str(const.TRACK_ENGINEERING)),
+        InlineKeyboardButton(text=track_type(const.TRACK_ENGINEERING, context) + 'Engineering ↵',
+                             callback_data=str(const.TRACK_ENGINEERING)),
         InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(const.TRACK_DATA_SCIENCE))
     ], [
         InlineKeyboardButton(text='☐ Management ↵', callback_data=str(const.TRACK_MANAGEMENT)),
@@ -85,6 +86,14 @@ def change_button_type(btn_code, context):
     if btn_code not in context.user_data:
         context.user_data[btn_code] = False
     context.user_data[btn_code] = not context.user_data[btn_code]
+
+
+def track_type(t_type, context):
+    if t_type == const.TRACK_ENGINEERING:
+        for val in const.TRACK_ENGINEERING_SET:
+            if context.user_data[val] is True:
+                return '▣ '
+    return '☐ '
 
 
 def select_track_engineering(update, context):
