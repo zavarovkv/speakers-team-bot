@@ -121,14 +121,16 @@ def select_track_engineering(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    query = update.callback_query
-    query.edit_message_text(text="Selected option: {}".format(query.data))
-    logger.warning("Selected option: {}".format(query.data))
-
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Engineering', reply_markup=keyboard)
 
     return SELECTING_ENGINEERING
+
+
+def click_btn_track_engineering(update, context):
+    query = update.callback_query
+    query.edit_message_text(text="Selected option: {}".format(query.data))
+    logger.warning("Selected option: {}".format(query.data))
 
 
 def select_track_data_science(update, context):
@@ -179,7 +181,7 @@ def main():
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
             ],
             SELECTING_ENGINEERING: [
-                CallbackQueryHandler(select_track_engineering)
+                CallbackQueryHandler(click_btn_track_engineering)
             ],
             SELECTING_DATA_SCIENCE: []
 
