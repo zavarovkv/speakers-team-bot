@@ -179,6 +179,7 @@ def main():
             ],
             const.SELECTING_ENGINEERING: [
                 CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
                 CallbackQueryHandler(select_track_engineering)
             ],
             const.SELECTING_DATA_SCIENCE: []
