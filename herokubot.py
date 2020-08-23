@@ -142,7 +142,7 @@ def select_track_data_science(update, context):
 
 
 def check_selected_track(update, context):
-
+    pass
 
 
 def stop(update, context):
