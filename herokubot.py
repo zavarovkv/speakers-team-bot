@@ -118,7 +118,7 @@ def select_track_engineering(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='🔧 Engineering', reply_markup=keyboard)
 
     return SELECTING_ENGINEERING
 
@@ -138,7 +138,11 @@ def select_track_data_science(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='🔧 Data Science', reply_markup=keyboard)
+
+
+def check_selected_track(update, context):
+
 
 
 def stop(update, context):
@@ -161,12 +165,14 @@ def main():
         states={
             SELECTING_TRACK_ACTION: [
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(TRACK_ENGINEERING) + '$'),
-                CallbackQueryHandler(select_track_data_science, pattern='^' + str(TRACK_DATA_SCIENCE) + '$')
+                CallbackQueryHandler(select_track_data_science, pattern='^' + str(TRACK_DATA_SCIENCE) + '$'),
+
+                CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
             ]
         },
 
         fallbacks=[
-            CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
             CommandHandler('stop', stop)
         ],
 
