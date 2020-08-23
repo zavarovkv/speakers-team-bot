@@ -91,14 +91,8 @@ def select_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
 
-    logger.info(f'btn code={btn_code}, type={type(btn_code)}')
-    logger.info(f'set={const.TRACK_ENGINEERING_SET}')
-
-    if btn_code in list(const.TRACK_ENGINEERING_SET):
-        logger.info('True')
+    if btn_code in const.TRACK_ENGINEERING_SET:
         change_button_type(btn_code, context)
-    else:
-        logger.info('False')
 
     buttons = [[
         InlineKeyboardButton(text=button_type(const.ENGIN_JAVA, context) + 'Java / Scala',
@@ -181,11 +175,11 @@ def main():
             const.SELECTING_TRACK_ACTION: [
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(const.TRACK_ENGINEERING) + '$'),
                 CallbackQueryHandler(select_track_data_science, pattern='^' + str(const.TRACK_DATA_SCIENCE) + '$'),
-                CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$')
             ],
             const.SELECTING_ENGINEERING: [
-                CallbackQueryHandler(select_track_engineering)
+                CallbackQueryHandler(select_track_engineering),
+                CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$')
             ],
             const.SELECTING_DATA_SCIENCE: []
 
