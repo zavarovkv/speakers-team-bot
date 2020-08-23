@@ -109,12 +109,14 @@ def select_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
 
-    logger.info(TRACK_ENGINEERING_SET)
+    logger(f'btn code={btn_code}')
+    logger.info(f'set={TRACK_ENGINEERING_SET}')
 
     if btn_code in TRACK_ENGINEERING_SET:
-        logger.info(f'btn in Set()')
-
+        logger.info('True')
         change_button_type(btn_code, context)
+    else:
+        logger.info('False')
 
     buttons = [[
         InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
