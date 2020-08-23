@@ -30,7 +30,11 @@ IAM_NEW_USER, IAM_OLD_USER = map(chr, range(2, 4))
  ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
  ENGIN_JS_BACK) = map(chr, range(14, 25))
 
-SELECT_TRACK_FROM_START = 25
+# Track Data Science
+(DATA_ANALYST, DATA_ENGINEER, DATA_SIMP_ANALYST,
+ DATA_ML_ENGINEER, DATA_ML_RESEARCHER) = map(chr, range(25, 30))
+
+SELECT_TRACK_FROM_START = 30
 
 
 def start(update, context):
@@ -86,11 +90,12 @@ def select_track(update, context):
         update.callback_query.answer()
         update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
 
+    context.user_data[SELECT_TRACK_FROM_START] = False
+
     return SELECTING_TRACK_ACTION
 
 
 def select_track_engineering(update, context):
-    # Send question about track
     buttons = [[
         InlineKeyboardButton(text='☐ Java / Scala', callback_data=str(ENGIN_JAVA)),
         InlineKeyboardButton(text='☐ Python', callback_data=str(ENGIN_PY)),
@@ -115,7 +120,23 @@ def select_track_engineering(update, context):
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
 
-    context.user_data[SELECT_TRACK_FROM_START] = False
+
+def select_track_data_science(update, context):
+    buttons = [[
+        InlineKeyboardButton(text='☐ Data Analyst', callback_data=str(DATA_ANALYST)),
+        InlineKeyboardButton(text='☐ Data Engineer', callback_data=str(DATA_ENGINEER)),
+        InlineKeyboardButton(text='☐ Analyst', callback_data=str(DATA_SIMP_ANALYST))
+    ], [
+        InlineKeyboardButton(text='☐ ML Engineer', callback_data=str(DATA_ML_ENGINEER)),
+        InlineKeyboardButton(text='☐ ML Researcher', callback_data=str(DATA_ML_RESEARCHER))
+    ], [
+        InlineKeyboardButton(text='◀ Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
 
 
 def stop(update, context):
