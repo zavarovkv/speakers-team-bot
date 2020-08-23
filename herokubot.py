@@ -121,8 +121,8 @@ def select_track_engineering(update, context):
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
-    update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера ➜ Engineering', reply_markup=keyboard)
+    update.callback_query.answer(update.callback_query.data)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Engineering', reply_markup=keyboard)
 
 
 def select_track_data_science(update, context):
