@@ -98,7 +98,7 @@ def check_track_for_selected(t_type, context):
 
 
 def track_type(t_type, context):
-    if check_track_for_selected(t_type):
+    if check_track_for_selected(t_type, context):
         return '▣ '
     return '☐ '
 
