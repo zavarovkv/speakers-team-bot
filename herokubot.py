@@ -182,8 +182,7 @@ def main():
                 CallbackQueryHandler(select_track_data_science, pattern='^' + str(TRACK_DATA_SCIENCE) + '$'),
 
                 CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
-                CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$'),
-                CallbackQueryHandler(select_track_engineering)
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$')
             ],
             SELECTING_ENGINEERING: [
             ],
@@ -192,7 +191,7 @@ def main():
         },
 
         fallbacks=[
-            CommandHandler('stop', stop)
+            CallbackQueryHandler(select_track_engineering)
         ],
 
         allow_reentry=True
