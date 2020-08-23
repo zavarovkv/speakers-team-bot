@@ -141,7 +141,7 @@ def main():
         },
 
         fallbacks=[
-            CallbackQueryHandler(select_track, pattern='^' + str(GO_TO_SELECT_TRACK) + '$'),
+            CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
             CommandHandler('stop', stop)
         ],
 
