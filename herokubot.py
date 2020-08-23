@@ -184,7 +184,7 @@ def main():
 
                 CallbackQueryHandler(select_track, pattern='^' + str(RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(SELECT_TRACK_NEXT) + '$'),
-                CallbackQueryHandler(click_btn_track_engineering, pattern='ENGIN_*')
+                CallbackQueryHandler(click_btn_track_engineering, pattern='^ENGIN_*')
             ],
             SELECTING_ENGINEERING: [
             ],
