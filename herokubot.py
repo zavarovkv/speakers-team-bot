@@ -15,25 +15,24 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Actions
-START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING, SELECTING_DATA_SCIENCE = map(str, range(4))
+START, SELECTING_TRACK_ACTION, SELECTING_ENGINEERING, SELECTING_DATA_SCIENCE = range(4)
 
 # Different users
-IAM_NEW_USER, IAM_OLD_USER = map(str, range(4, 6))
+IAM_NEW_USER, IAM_OLD_USER = range(4, 6)
 
-SELECT_TRACK_FROM_START = str(6)
+SELECT_TRACK_FROM_START = 6
 
 # Different tracks
 (TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR,
  TRACK_MARKETING, TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS, SELECT_TRACK_NEXT,
- RETURN_TO_SELECT_TRACK) = map(str, range(7, 17))
+ RETURN_TO_SELECT_TRACK) = range(7, 17)
 
 TRACK_ENGINEERING_SET = (ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
                          ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
                          ENGIN_JS_BACK) = range(17, 28)
-TRACK_ENGINEERING_SET = map(str, TRACK_ENGINEERING_SET)
 
 TRACK_DS_SET = (DS_ANALYST, DS_ENGINEER, DS_SIMP_ANALYST,
-                DS_ML_ENGINEER, DS_ML_RESEARCHER) = map(str, range(28, 33))
+                DS_ML_ENGINEER, DS_ML_RESEARCHER) = range(28, 33)
 
 
 def start(update, context):
@@ -41,9 +40,9 @@ def start(update, context):
 
     if is_new_user:
         buttons = [[
-            InlineKeyboardButton('Я первый раз', callback_data=str(IAM_NEW_USER))
+            InlineKeyboardButton('Я первый раз', callback_data=IAM_NEW_USER)
         ], [
-            InlineKeyboardButton('У меня есть аккаунт', callback_data=str(IAM_OLD_USER))
+            InlineKeyboardButton('У меня есть аккаунт', callback_data=IAM_OLD_USER)
         ]]
         keyboard = InlineKeyboardMarkup(buttons)
         update.message.reply_text('👋 Hey! Давайте активируем SpeakersTeam — это займет меньше минуты.',
@@ -58,19 +57,19 @@ def start(update, context):
 
 def select_track(update, context):
     buttons = [[
-        InlineKeyboardButton(text='☐ Engineering ↵', callback_data=str(TRACK_ENGINEERING)),
-        InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(TRACK_DATA_SCIENCE))
+        InlineKeyboardButton(text='☐ Engineering ↵', callback_data=TRACK_ENGINEERING),
+        InlineKeyboardButton(text='☐ Data Science ↵', callback_data=TRACK_DATA_SCIENCE)
     ], [
-        InlineKeyboardButton(text='☐ Management ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ Tech HR', callback_data=str(TRACK_HR))
+        InlineKeyboardButton(text='☐ Management ↵', callback_data=TRACK_MANAGEMENT),
+        InlineKeyboardButton(text='☐ Tech HR', callback_data=TRACK_HR)
     ], [
-        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(TRACK_MARKETING)),
-        InlineKeyboardButton(text='☐ Design & UX', callback_data=str(TRACK_DESIGN))
+        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=TRACK_MARKETING),
+        InlineKeyboardButton(text='☐ Design & UX', callback_data=TRACK_DESIGN)
     ], [
-        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_QA)),
-        InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_DEVOPS))
+        InlineKeyboardButton(text='☐ QA ↵', callback_data=TRACK_QA),
+        InlineKeyboardButton(text='☐ DevOps', callback_data=TRACK_DEVOPS)
     ], [
-        InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
+        InlineKeyboardButton(text='Далее »', callback_data=SELECT_TRACK_NEXT)
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -122,23 +121,23 @@ def select_track_engineering(update, context):
         logger.info('False')
 
     buttons = [[
-        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=str(ENGIN_JAVA)),
-        InlineKeyboardButton(text=button_type(ENGIN_PY, context) + 'Python', callback_data=str(ENGIN_PY)),
-        InlineKeyboardButton(text=button_type(ENGIN_CSH, context) + 'С#', callback_data=str(ENGIN_CSH))
+        InlineKeyboardButton(text=button_type(ENGIN_JAVA, context) + 'Java / Scala', callback_data=ENGIN_JAVA),
+        InlineKeyboardButton(text=button_type(ENGIN_PY, context) + 'Python', callback_data=ENGIN_PY),
+        InlineKeyboardButton(text=button_type(ENGIN_CSH, context) + 'С#', callback_data=ENGIN_CSH)
     ], [
-        InlineKeyboardButton(text=button_type(ENGIN_IOS, context) + 'iOS', callback_data=str(ENGIN_IOS)),
-        InlineKeyboardButton(text=button_type(ENGIN_ANDROID, context) + 'Android', callback_data=str(ENGIN_ANDROID)),
-        InlineKeyboardButton(text=button_type(ENGIN_CPP, context) + 'C/C++', callback_data=str(ENGIN_CPP))
+        InlineKeyboardButton(text=button_type(ENGIN_IOS, context) + 'iOS', callback_data=ENGIN_IOS),
+        InlineKeyboardButton(text=button_type(ENGIN_ANDROID, context) + 'Android', callback_data=ENGIN_ANDROID),
+        InlineKeyboardButton(text=button_type(ENGIN_CPP, context) + 'C/C++', callback_data=ENGIN_CPP)
     ], [
-        InlineKeyboardButton(text=button_type(ENGIN_GO, context) + 'Go', callback_data=str(ENGIN_GO)),
-        InlineKeyboardButton(text=button_type(ENGIN_RUBY, context) + 'Ruby', callback_data=str(ENGIN_RUBY)),
-        InlineKeyboardButton(text=button_type(ENGIN_PHP, context) + 'PHP', callback_data=str(ENGIN_PHP))
+        InlineKeyboardButton(text=button_type(ENGIN_GO, context) + 'Go', callback_data=ENGIN_GO),
+        InlineKeyboardButton(text=button_type(ENGIN_RUBY, context) + 'Ruby', callback_data=ENGIN_RUBY),
+        InlineKeyboardButton(text=button_type(ENGIN_PHP, context) + 'PHP', callback_data=ENGIN_PHP)
     ], [
-        InlineKeyboardButton(text=button_type(ENGIN_JS_FRONT, context) + 'JS / Front-end', callback_data=str(ENGIN_JS_FRONT)),
-        InlineKeyboardButton(text=button_type(ENGIN_JS_BACK, context) + 'JS / Back-end', callback_data=str(ENGIN_JS_BACK))
+        InlineKeyboardButton(text=button_type(ENGIN_JS_FRONT, context) + 'JS / Front-end', callback_data=ENGIN_JS_FRONT),
+        InlineKeyboardButton(text=button_type(ENGIN_JS_BACK, context) + 'JS / Back-end', callback_data=ENGIN_JS_BACK)
     ], [
-        InlineKeyboardButton(text='« Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
-        InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
+        InlineKeyboardButton(text='« Назад', callback_data=RETURN_TO_SELECT_TRACK),
+        InlineKeyboardButton(text='Далее »', callback_data=SELECT_TRACK_NEXT)
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -150,15 +149,15 @@ def select_track_engineering(update, context):
 
 def select_track_data_science(update, context):
     buttons = [[
-        InlineKeyboardButton(text='☐ Data Analyst', callback_data=str(DS_ANALYST)),
-        InlineKeyboardButton(text='☐ Data Engineer', callback_data=str(DS_ENGINEER)),
-        InlineKeyboardButton(text='☐ Analyst', callback_data=str(DS_SIMP_ANALYST))
+        InlineKeyboardButton(text='☐ Data Analyst', callback_data=DS_ANALYST),
+        InlineKeyboardButton(text='☐ Data Engineer', callback_data=DS_ENGINEER),
+        InlineKeyboardButton(text='☐ Analyst', callback_data=DS_SIMP_ANALYST)
     ], [
-        InlineKeyboardButton(text='☐ ML Engineer', callback_data=str(DS_ML_ENGINEER)),
-        InlineKeyboardButton(text='☐ ML Researcher', callback_data=str(DS_ML_RESEARCHER))
+        InlineKeyboardButton(text='☐ ML Engineer', callback_data=DS_ML_ENGINEER),
+        InlineKeyboardButton(text='☐ ML Researcher', callback_data=DS_ML_RESEARCHER)
     ], [
-        InlineKeyboardButton(text='« Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
-        InlineKeyboardButton(text='Далее »', callback_data=str(SELECT_TRACK_NEXT))
+        InlineKeyboardButton(text='« Назад', callback_data=RETURN_TO_SELECT_TRACK),
+        InlineKeyboardButton(text='Далее »', callback_data=SELECT_TRACK_NEXT)
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
