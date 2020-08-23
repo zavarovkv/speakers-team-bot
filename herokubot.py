@@ -88,13 +88,25 @@ def change_button_type(btn_code, context):
     context.user_data[btn_code] = not context.user_data[btn_code]
 
 
-def track_type(t_type, context):
+def check_track_for_selected(t_type, context):
     if t_type == const.TRACK_ENGINEERING:
         for val in const.TRACK_ENGINEERING_SET:
             if val in context.user_data:
                 if context.user_data[val] is True:
-                    return '▣ '
+                    return True
+    return False
+
+
+def track_type(t_type, context):
+    if check_track_for_selected(t_type):
+        return '▣ '
     return '☐ '
+
+
+def is_track_selected(context):
+    if check_track_for_selected(const.TRACK_ENGINEERING):
+        return True
+    return False
 
 
 def select_track_engineering(update, context):
@@ -161,7 +173,10 @@ def select_track_data_science(update, context):
 
 
 def check_selected_track(update, context):
-    update.callback_query.answer(text='Пожалуйста, выберите сферу')
+    if is_track_selected(context):
+        update.callback_query.answer(text='Продолжение скоро будет')
+    else:
+        update.callback_query.answer(text='Пожалуйста, выберите сферу')
 
 
 def stop(update, context):
