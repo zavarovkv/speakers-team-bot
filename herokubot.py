@@ -159,7 +159,7 @@ def main():
         states={
             SELECTING_TRACK_ACTION: [
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(TRACK_ENGINEERING) + '$'),
-                CallbackQueryHandler(select_track_engineering, pattern='^' + str(TRACK_DATA_SCIENCE) + '$')
+                CallbackQueryHandler(select_track_data_science, pattern='^' + str(TRACK_DATA_SCIENCE) + '$')
             ]
         },
 
