@@ -137,7 +137,7 @@ def select_track_data_science(update, context):
 
 
 def check_selected_track(update, context):
-    pass
+    update.callback_query.answer(text='Пожалуйста, выберите сферу')
 
 
 def stop(update, context):
