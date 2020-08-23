@@ -91,10 +91,8 @@ def select_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
 
-    logger.info(f'btn code={btn_code}')
+    logger.info(f'btn code={btn_code}, type={type(btn_code)}')
     logger.info(f'set={const.TRACK_ENGINEERING_SET}')
-    x = list(const.TRACK_ENGINEERING_SET)
-    logger.info(f'list={x}')
 
     if btn_code in list(const.TRACK_ENGINEERING_SET):
         logger.info('True')
