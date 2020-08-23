@@ -109,9 +109,11 @@ def select_track_engineering(update, context):
     query = update.callback_query
     btn_code = query.data
 
+    logger.info(TRACK_ENGINEERING_SET)
+
     if btn_code in TRACK_ENGINEERING_SET:
         logger.info(f'btn in Set()')
-        
+
         change_button_type(btn_code, context)
 
     buttons = [[
