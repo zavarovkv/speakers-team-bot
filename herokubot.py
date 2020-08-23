@@ -14,14 +14,23 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-IAM_NEW_USER, IAM_OLD_USER = 101, 102
+# Actions
+START, SELECTING_TRACK_ACTION = map(chr, range(2))
 
-START, SELECTING_TRACK_ACTION, IAM_SPEAKER, IAM_MANAGER, HIDE_KEYBOARD = map(chr, range(5))
-SELECTING_TRACK, TRACK_PROGRAMMING, TRACK_MANAGEMENT, TRACK_MARKETING = map(chr, range(5, 9))
-START_OVER = 9
-GO_TO_SELECT_TRACK = 10
-SELECT_TRACK_FROM_START = 11
-END = ConversationHandler.END
+# Different users
+IAM_NEW_USER, IAM_OLD_USER = map(chr, range(2, 4))
+
+# Different tracks
+(TRACK_ENGINEERING, TRACK_DATA_SCIENCE, TRACK_MANAGEMENT, TRACK_HR,
+ TRACK_MARKETING, TRACK_DESIGN, TRACK_QA, TRACK_DEVOPS,
+ SELECT_TRACK_NEXT, RETURN_TO_SELECT_TRACK) = map(chr, range(4, 14))
+
+# Track Engineering
+(ENGIN_JAVA, ENGIN_PY, ENGIN_CSH, ENGIN_IOS, ENGIN_ANDROID,
+ ENGIN_CPP, ENGIN_GO, ENGIN_RUBY, ENGIN_PHP, ENGIN_JS_FRONT,
+ ENGIN_JS_BACK) = map(chr, range(14, 25))
+
+SELECT_TRACK_FROM_START = 25
 
 
 def start(update, context):
@@ -47,19 +56,19 @@ def start(update, context):
 def select_track(update, context):
 
     buttons = [[
-        InlineKeyboardButton(text='☐ Engineering ↵', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(1))
+        InlineKeyboardButton(text='☐ Engineering ↵', callback_data=str(TRACK_ENGINEERING)),
+        InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(TRACK_DATA_SCIENCE))
     ], [
         InlineKeyboardButton(text='☐ Management ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ Tech Recruitment', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ Tech HR', callback_data=str(TRACK_HR))
     ], [
-        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='▣ Design & UX', callback_data=str(TRACK_MANAGEMENT))
+        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(TRACK_MARKETING)),
+        InlineKeyboardButton(text='▣ Design & UX', callback_data=str(TRACK_DESIGN))
     ], [
-        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_MARKETING)),
-        InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(TRACK_QA)),
+        InlineKeyboardButton(text='☐ DevOps', callback_data=str(TRACK_DEVOPS))
     ], [
-        InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
+        InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -68,41 +77,38 @@ def select_track(update, context):
         update.callback_query.answer()
         update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
-        # Send general message
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
                                  text='⚙️ Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
 
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                                 text='👨🏼‍💻 Сфера',
-                                 reply_markup=keyboard)
+                                 text='👨🏼‍💻 Сфера', reply_markup=keyboard)
     else:
         update.callback_query.answer()
-        update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера',
-                                                reply_markup=keyboard)
+        update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
 
     return SELECTING_TRACK_ACTION
 
 
-def select_track_programming(update, context):
+def select_track_engineering(update, context):
     # Send question about track
     buttons = [[
-        InlineKeyboardButton(text='☐ Java / Scala', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ Python', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ С#', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ Java / Scala', callback_data=str(ENGIN_JAVA)),
+        InlineKeyboardButton(text='☐ Python', callback_data=str(ENGIN_PY)),
+        InlineKeyboardButton(text='☐ С#', callback_data=str(ENGIN_CSH))
     ], [
-        InlineKeyboardButton(text='☐ iOS', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ Android', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ C/C++', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ iOS', callback_data=str(ENGIN_IOS)),
+        InlineKeyboardButton(text='☐ Android', callback_data=str(ENGIN_ANDROID)),
+        InlineKeyboardButton(text='☐ C/C++', callback_data=str(ENGIN_CPP))
     ], [
-        InlineKeyboardButton(text='☐ Go', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ Ruby', callback_data=str(TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ PHP', callback_data=str(TRACK_MARKETING))
+        InlineKeyboardButton(text='☐ Go', callback_data=str(ENGIN_GO)),
+        InlineKeyboardButton(text='☐ Ruby', callback_data=str(ENGIN_RUBY)),
+        InlineKeyboardButton(text='☐ PHP', callback_data=str(ENGIN_PHP))
     ], [
-        InlineKeyboardButton(text='☐ JS/Front-end', callback_data=str(TRACK_PROGRAMMING)),
-        InlineKeyboardButton(text='☐ JS/Back-end', callback_data=str(TRACK_MANAGEMENT))
+        InlineKeyboardButton(text='☐ JS/Front-end', callback_data=str(ENGIN_JS_FRONT)),
+        InlineKeyboardButton(text='☐ JS/Back-end', callback_data=str(ENGIN_JS_BACK))
     ], [
-        InlineKeyboardButton(text='◀ Назад', callback_data=str(GO_TO_SELECT_TRACK)),
-        InlineKeyboardButton(text='Далее ▶', callback_data=str(123))
+        InlineKeyboardButton(text='◀ Назад', callback_data=str(RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее ▶', callback_data=str(SELECT_TRACK_NEXT))
     ]]
     keyboard = InlineKeyboardMarkup(buttons)
 
@@ -111,13 +117,11 @@ def select_track_programming(update, context):
 
     context.user_data[SELECT_TRACK_FROM_START] = False
 
-    return 1001
-
 
 def stop(update, context):
     update.message.reply_text('Okay, bye.')
 
-    return END
+    return ConversationHandler.END
 
 
 def main():
@@ -132,8 +136,8 @@ def main():
         entry_points=[CallbackQueryHandler(select_track,
                                            pattern='^' + str(IAM_NEW_USER) + '$')],
         states={
-            SELECTING_TRACK_ACTION: [CallbackQueryHandler(select_track_programming,
-                                                          pattern='^' + str(TRACK_PROGRAMMING) + '$')]
+            SELECTING_TRACK_ACTION: [CallbackQueryHandler(select_track_engineering,
+                                                          pattern='^' + str(TRACK_ENGINEERING) + '$')]
         },
 
         fallbacks=[
@@ -162,10 +166,7 @@ def main():
 
     dp.add_handler(conv_handler)
 
-    # Start the webhook
-    updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=TOKEN)
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
     updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
     updater.idle()
 
