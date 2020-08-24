@@ -41,8 +41,8 @@ def select_track(update, context):
     buttons = [[
         InlineKeyboardButton(text=track_type(const.TRACK_ENGINEERING, context) + 'Engineering ↵',
                              callback_data=str(const.TRACK_ENGINEERING)),
-        InlineKeyboardButton(text=track_type(const.TRACK_DATA_SCIENCE, context) + 'Data Science ↵',
-                             callback_data=str(const.TRACK_DATA_SCIENCE))
+        InlineKeyboardButton(text=track_type(const.TRACK_DS, context) + 'Data Science ↵',
+                             callback_data=str(const.TRACK_DS))
     ], [
         InlineKeyboardButton(text='☐ Management ↵', callback_data=str(const.TRACK_MANAGEMENT)),
         InlineKeyboardButton(text='☐ Tech HR', callback_data=str(const.TRACK_HR))
@@ -89,30 +89,35 @@ def change_button_type(btn_code, context):
     context.user_data[btn_code] = not context.user_data[btn_code]
 
 
-def check_track_for_selected(t_type, context):
-    if t_type == const.TRACK_ENGINEERING:
-        for val in const.TRACK_ENGINEERING_SET:
-            if val in context.user_data:
-                if context.user_data[val] is True:
-                    return True
-
-    elif t_type == const.TRACK_DATA_SCIENCE:
-        for val in const.TRACK_DS_SET:
-            if val in context.user_data:
-                if context.user_data[val] is True:
-                    return True
-    return False
-
-
 def track_type(t_type, context):
     if check_track_for_selected(t_type, context):
         return '▣ '
     return '☐ '
 
 
+def check_track_for_selected(t_type, context):
+    if t_type == const.TRACK_ENGINEERING:
+        for val in const.TRACK_ENGINEERING_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
+    elif t_type == const.TRACK_DS:
+        for val in const.TRACK_DS_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
+    elif t_type == const.TRACK_MANAGEMENT:
+        for val in const.TRACK_MANAGEMENT_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
+    return False
+
+
 def is_track_selected(context):
     if check_track_for_selected(const.TRACK_ENGINEERING, context) or \
-       check_track_for_selected(const.TRACK_DATA_SCIENCE, context):
+       check_track_for_selected(const.TRACK_DS, context) or \
+       check_track_for_selected(const.TRACK_MANAGEMENT, context):
         return True
     return False
 
@@ -193,6 +198,35 @@ def select_track_data_science(update, context):
     return const.SELECTING_DATA_SCIENCE
 
 
+def select_track_management(update, context):
+    query = update.callback_query
+    btn_code = query.data
+
+    if btn_code in const.TRACK_MANAGEMENT_SET:
+        change_button_type(btn_code, context)
+
+    buttons = [[
+        InlineKeyboardButton(text=button_type(const.MANAGEMENT_PRODUCT, context) + 'Product management',
+                             callback_data=str(const.MANAGEMENT_PRODUCT)),
+        InlineKeyboardButton(text=button_type(const.MANAGEMENT_PROJECT, context) + 'Project management',
+                             callback_data=str(const.MANAGEMENT_PROJECT))
+    ], [
+        InlineKeyboardButton(text=button_type(const.MANAGEMENT_TECH, context) + 'Tech management',
+                             callback_data=str(const.MANAGEMENT_TECH)),
+        InlineKeyboardButton(text=button_type(const.MANAGEMENT_AGILE, context) + 'Agile',
+                             callback_data=str(const.MANAGEMENT_AGILE))
+    ], [
+        InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Management', reply_markup=keyboard)
+
+    return const.SELECTING_MANAGEMENT
+
+
 def check_selected_track(update, context):
     if is_track_selected(context):
         update.callback_query.answer(text='Продолжение скоро будет')
@@ -220,7 +254,7 @@ def main():
         states={
             const.SELECTING_TRACK_ACTION: [
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(const.TRACK_ENGINEERING) + '$'),
-                CallbackQueryHandler(select_track_data_science, pattern='^' + str(const.TRACK_DATA_SCIENCE) + '$'),
+                CallbackQueryHandler(select_track_data_science, pattern='^' + str(const.TRACK_DS) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$')
             ],
             const.SELECTING_ENGINEERING: [
@@ -232,8 +266,12 @@ def main():
                 CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
                 CallbackQueryHandler(select_track_data_science)
+            ],
+            const.SELECTING_MANAGEMENT: [
+                CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
+                CallbackQueryHandler(select_track_management)
             ]
-
         },
         fallbacks={
             CallbackQueryHandler('stop', stop)
