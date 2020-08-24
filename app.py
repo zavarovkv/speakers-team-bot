@@ -64,7 +64,7 @@ def select_track(update, context):
         update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                                 text='⚙️ Настройки профиля\n\nВыберите сферу, зарплату и локацию.')
+                                 text='⚙️ Настройки профиля\n\nВыберите сферу и расскажите о своем опыте выступлений.')
 
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
                                  text='👨🏼‍💻 Сфера', reply_markup=keyboard)
