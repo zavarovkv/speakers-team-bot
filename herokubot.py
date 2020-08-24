@@ -171,6 +171,8 @@ def select_track_data_science(update, context):
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Data Science', reply_markup=keyboard)
 
+    return const.SELECTING_DATA_SCIENCE
+
 
 def check_selected_track(update, context):
     if is_track_selected(context):
