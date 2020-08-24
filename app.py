@@ -44,7 +44,8 @@ def select_track(update, context):
         InlineKeyboardButton(text=track_type(const.TRACK_DS, context) + 'Data Science ↵',
                              callback_data=str(const.TRACK_DS))
     ], [
-        InlineKeyboardButton(text='☐ Management ↵', callback_data=str(const.TRACK_MANAGEMENT)),
+        InlineKeyboardButton(text=track_type(const.TRACK_MANAGEMENT, context) + 'Management ↵',
+                             callback_data=str(const.TRACK_MANAGEMENT)),
         InlineKeyboardButton(text='☐ Tech HR', callback_data=str(const.TRACK_HR))
     ], [
         InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(const.TRACK_MARKETING)),
@@ -255,6 +256,7 @@ def main():
             const.SELECTING_TRACK_ACTION: [
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(const.TRACK_ENGINEERING) + '$'),
                 CallbackQueryHandler(select_track_data_science, pattern='^' + str(const.TRACK_DS) + '$'),
+                CallbackQueryHandler(select_track_management, pattern='^' + str(const.TRACK_DS) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$')
             ],
             const.SELECTING_ENGINEERING: [
