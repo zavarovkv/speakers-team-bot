@@ -155,6 +155,12 @@ def select_track_engineering(update, context):
 
 
 def select_track_data_science(update, context):
+    query = update.callback_query
+    btn_code = query.data
+
+    if btn_code in const.TRACK_DS_SET:
+        change_button_type(btn_code, context)
+
     buttons = [[
         InlineKeyboardButton(text=button_type(const.DS_ANALYST, context) + 'Data Analyst',
                              callback_data=str(const.DS_ANALYST)),
@@ -216,7 +222,8 @@ def main():
             ],
             const.SELECTING_DATA_SCIENCE: [
                 CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
-                CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$')
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
+                CallbackQueryHandler(select_track_data_science)
             ]
 
         },
