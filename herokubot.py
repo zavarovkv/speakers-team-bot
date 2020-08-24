@@ -156,12 +156,17 @@ def select_track_engineering(update, context):
 
 def select_track_data_science(update, context):
     buttons = [[
-        InlineKeyboardButton(text='☐ Data Analyst', callback_data=str(const.DS_ANALYST)),
-        InlineKeyboardButton(text='☐ Data Engineer', callback_data=str(const.DS_ENGINEER)),
-        InlineKeyboardButton(text='☐ Analyst', callback_data=str(const.DS_SIMP_ANALYST))
+        InlineKeyboardButton(text=button_type(const.DS_ANALYST, context) + 'Data Analyst',
+                             callback_data=str(const.DS_ANALYST)),
+        InlineKeyboardButton(text=button_type(const.DS_ENGINEER, context) + 'Data Engineer',
+                             callback_data=str(const.DS_ENGINEER)),
+        InlineKeyboardButton(text=button_type(const.DS_SIMP_ANALYST, context) + 'Analyst',
+                             callback_data=str(const.DS_SIMP_ANALYST))
     ], [
-        InlineKeyboardButton(text='☐ ML Engineer', callback_data=str(const.DS_ML_ENGINEER)),
-        InlineKeyboardButton(text='☐ ML Researcher', callback_data=str(const.DS_ML_RESEARCHER))
+        InlineKeyboardButton(text=button_type(const.DS_ML_ENGINEER, context) + 'ML Engineer',
+                             callback_data=str(const.DS_ML_ENGINEER)),
+        InlineKeyboardButton(text=button_type(const.DS_ML_RESEARCHER, context) + 'ML Researcher',
+                             callback_data=str(const.DS_ML_RESEARCHER))
     ], [
         InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
