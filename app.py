@@ -41,7 +41,8 @@ def select_track(update, context):
     buttons = [[
         InlineKeyboardButton(text=track_type(const.TRACK_ENGINEERING, context) + 'Engineering ↵',
                              callback_data=str(const.TRACK_ENGINEERING)),
-        InlineKeyboardButton(text='☐ Data Science ↵', callback_data=str(const.TRACK_DATA_SCIENCE))
+        InlineKeyboardButton(text=track_type(const.TRACK_DATA_SCIENCE, context) + 'Data Science ↵',
+                             callback_data=str(const.TRACK_DATA_SCIENCE))
     ], [
         InlineKeyboardButton(text='☐ Management ↵', callback_data=str(const.TRACK_MANAGEMENT)),
         InlineKeyboardButton(text='☐ Tech HR', callback_data=str(const.TRACK_HR))
@@ -94,6 +95,12 @@ def check_track_for_selected(t_type, context):
             if val in context.user_data:
                 if context.user_data[val] is True:
                     return True
+
+    elif t_type == const.TRACK_DATA_SCIENCE:
+        for val in const.TRACK_DS_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
     return False
 
 
@@ -104,7 +111,8 @@ def track_type(t_type, context):
 
 
 def is_track_selected(context):
-    if check_track_for_selected(const.TRACK_ENGINEERING, context):
+    if check_track_for_selected(const.TRACK_ENGINEERING, context) or \
+       check_track_for_selected(const.TRACK_DATA_SCIENCE, context):
         return True
     return False
 
