@@ -45,6 +45,8 @@ def select_track(update, context):
 
     if btn_code in const.TRACKS_SET:
         change_button_type(btn_code, context)
+        logger.info(f'>>>     True')
+    logger.info(f'>>>     False')
 
     buttons = [[
         InlineKeyboardButton(text=track_type(const.TRACK_ENGINEERING, context) + 'Engineering ↵',
