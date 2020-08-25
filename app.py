@@ -116,13 +116,19 @@ def check_track_for_selected(t_type, context):
             if val in context.user_data:
                 if context.user_data[val] is True:
                     return True
+    elif t_type == const.TRACK_DESIGN:
+        for val in const.TRACK_SIMPLE_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
     return False
 
 
 def is_track_selected(context):
     if check_track_for_selected(const.TRACK_ENGINEERING, context) or \
        check_track_for_selected(const.TRACK_DS, context) or \
-       check_track_for_selected(const.TRACK_MANAGEMENT, context):
+       check_track_for_selected(const.TRACK_MANAGEMENT, context) or \
+       check_track_for_selected(const.TRACK_DESIGN, context):
         return True
     return False
 
