@@ -41,6 +41,8 @@ def select_track(update, context):
     query = update.callback_query
     btn_code = query.data
 
+    logger.info(f'btn_code={btn_code}')
+    
     if btn_code in const.TRACKS_SET:
         change_button_type(btn_code, context)
 
@@ -52,7 +54,8 @@ def select_track(update, context):
     ], [
         InlineKeyboardButton(text=track_type(const.TRACK_MANAGEMENT, context) + 'Management ↵',
                              callback_data=str(const.TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text=button_type(const.TRACK_HR, context) + 'Tech HR', callback_data=str(const.TRACK_HR))
+        InlineKeyboardButton(text=button_type(const.TRACK_HR, context) + 'Tech HR',
+                             callback_data=str(const.TRACK_HR))
     ], [
         InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(const.TRACK_MARKETING)),
         InlineKeyboardButton(text='☐ Design & UX', callback_data=str(const.TRACK_DESIGN))
