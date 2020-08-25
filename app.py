@@ -41,12 +41,8 @@ def select_track(update, context):
     query = update.callback_query
     btn_code = query.data
 
-    logger.info(f'>>>     btn_code={btn_code}')
-
-    if btn_code in const.TRACKS_SET:
+    if btn_code in const.TRACK_SIMPLE_SET:
         change_button_type(btn_code, context)
-        logger.info(f'>>>     True')
-    logger.info(f'>>>     False')
 
     buttons = [[
         InlineKeyboardButton(text=track_type(const.TRACK_ENGINEERING, context) + 'Engineering ↵',
@@ -56,14 +52,10 @@ def select_track(update, context):
     ], [
         InlineKeyboardButton(text=track_type(const.TRACK_MANAGEMENT, context) + 'Management ↵',
                              callback_data=str(const.TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text=button_type(const.TRACK_HR, context) + 'Tech HR',
-                             callback_data=str(const.TRACK_HR))
+        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(const.TRACK_MARKETING))
     ], [
-        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(const.TRACK_MARKETING)),
-        InlineKeyboardButton(text='☐ Design & UX', callback_data=str(const.TRACK_DESIGN))
-    ], [
-        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(const.TRACK_QA)),
-        InlineKeyboardButton(text='☐ DevOps', callback_data=str(const.TRACK_DEVOPS))
+        InlineKeyboardButton(text='☐ Design & UX', callback_data=str(const.TRACK_DESIGN)),
+        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(const.TRACK_QA))
     ], [
         InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
     ]]
@@ -166,7 +158,9 @@ def select_track_engineering(update, context):
         InlineKeyboardButton(text=button_type(const.ENGIN_JS_FRONT, context) + 'JS / Front-end',
                              callback_data=str(const.ENGIN_JS_FRONT)),
         InlineKeyboardButton(text=button_type(const.ENGIN_JS_BACK, context) + 'JS / Back-end',
-                             callback_data=str(const.ENGIN_JS_BACK))
+                             callback_data=str(const.ENGIN_JS_BACK)),
+        InlineKeyboardButton(text=button_type(const.ENGIN_DEVOPS, context) + 'DevOps',
+                             callback_data=str(const.ENGIN_DEVOPS))
     ], [
         InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
@@ -226,7 +220,9 @@ def select_track_management(update, context):
         InlineKeyboardButton(text=button_type(const.MANAGEMENT_TECH, context) + 'Tech management',
                              callback_data=str(const.MANAGEMENT_TECH)),
         InlineKeyboardButton(text=button_type(const.MANAGEMENT_AGILE, context) + 'Agile',
-                             callback_data=str(const.MANAGEMENT_AGILE))
+                             callback_data=str(const.MANAGEMENT_AGILE)),
+        InlineKeyboardButton(text=button_type(const.MANAGEMENT_HR, context) + 'HR',
+                             callback_data=str(const.MANAGEMENT_HR))
     ], [
         InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
         InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
