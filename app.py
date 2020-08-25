@@ -41,8 +41,8 @@ def select_track(update, context):
     query = update.callback_query
     btn_code = query.data
 
-    logger.info(f'btn_code={btn_code}')
-    
+    logger.info(f'>>>     btn_code={btn_code}')
+
     if btn_code in const.TRACKS_SET:
         change_button_type(btn_code, context)
 
