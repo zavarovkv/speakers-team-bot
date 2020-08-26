@@ -316,6 +316,7 @@ def main():
                 CallbackQueryHandler(select_track_engineering, pattern='^' + str(const.TRACK_ENGINEERING) + '$'),
                 CallbackQueryHandler(select_track_data_science, pattern='^' + str(const.TRACK_DS) + '$'),
                 CallbackQueryHandler(select_track_management, pattern='^' + str(const.TRACK_MANAGEMENT) + '$'),
+                CallbackQueryHandler(select_track_marketing, pattern='^' + str(const.TRACK_MARKETING) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
                 CallbackQueryHandler(select_track)
             ],
