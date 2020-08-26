@@ -5,7 +5,6 @@ import os
 import logging
 import constants as const
 
-
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton,
                       InlineKeyboardMarkup)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
@@ -52,7 +51,8 @@ def select_track(update, context):
     ], [
         InlineKeyboardButton(text=track_type(const.TRACK_MANAGEMENT, context) + 'Management ↵',
                              callback_data=str(const.TRACK_MANAGEMENT)),
-        InlineKeyboardButton(text='☐ Marketing ↵', callback_data=str(const.TRACK_MARKETING))
+        InlineKeyboardButton(text=track_type(const.TRACK_MARKETING, context) + 'Marketing ↵',
+                             callback_data=str(const.TRACK_MARKETING))
     ], [
         InlineKeyboardButton(text=button_type(const.TRACK_DESIGN, context) + 'Design & UX',
                              callback_data=str(const.TRACK_DESIGN)),
@@ -121,14 +121,20 @@ def check_track_for_selected(t_type, context):
             if val in context.user_data:
                 if context.user_data[val] is True:
                     return True
+    elif t_type == const.TRACK_MARKETING:
+        for val in const.TRACK_MARKETING_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
     return False
 
 
 def is_track_selected(context):
     if check_track_for_selected(const.TRACK_ENGINEERING, context) or \
-       check_track_for_selected(const.TRACK_DS, context) or \
-       check_track_for_selected(const.TRACK_MANAGEMENT, context) or \
-       check_track_for_selected(const.TRACK_DESIGN, context):
+            check_track_for_selected(const.TRACK_DS, context) or \
+            check_track_for_selected(const.TRACK_MANAGEMENT, context) or \
+            check_track_for_selected(const.TRACK_DESIGN, context) or \
+            check_track_for_selected(const.TRACK_MARKETING, context):
         return True
     return False
 
@@ -242,6 +248,45 @@ def select_track_management(update, context):
     return const.SELECTING_MANAGEMENT
 
 
+def select_track_marketing(update, context):
+    query = update.callback_query
+    btn_code = query.data
+
+    if btn_code in const.TRACK_MARKETING_SET:
+        change_button_type(btn_code, context)
+
+    buttons = [[
+        InlineKeyboardButton(text=button_type(const.MARKETING_INTERNET, context) + 'Internet marketing',
+                             callback_data=str(const.MARKETING_INTERNET)),
+        InlineKeyboardButton(text=button_type(const.MARKETING_EVENT, context) + 'Event marketing',
+                             callback_data=str(const.MARKETING_EVENT))
+    ], [
+        InlineKeyboardButton(text=button_type(const.MARKETING_PR, context) + 'PR',
+                             callback_data=str(const.MARKETING_PR)),
+        InlineKeyboardButton(text=button_type(const.MARKETING_BRANDING, context) + 'Branding',
+                             callback_data=str(const.MARKETING_BRANDING))
+    ], [
+        InlineKeyboardButton(text=button_type(const.MARKETING_COMMUNITY, context) + 'Community marketing',
+                             callback_data=str(const.MARKETING_COMMUNITY)),
+        InlineKeyboardButton(text=button_type(const.MARKETING_SMM, context) + 'SMM',
+                             callback_data=str(const.MARKETING_SMM))
+    ], [
+        InlineKeyboardButton(text=button_type(const.MARKETING_CONTENT, context) + 'Content marketing',
+                             callback_data=str(const.MARKETING_CONTENT)),
+        InlineKeyboardButton(text=button_type(const.MARKETING_ADV, context) + 'Advertising',
+                             callback_data=str(const.MARKETING_ADV))
+    ], [
+        InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Marketing', reply_markup=keyboard)
+
+    return const.SELECTING_MARKETING
+
+
 def check_selected_track(update, context):
     if is_track_selected(context):
         update.callback_query.answer(text='Продолжение скоро будет')
@@ -288,6 +333,11 @@ def main():
                 CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
                 CallbackQueryHandler(select_track_management)
+            ],
+            const.SELECTING_MARKETING: [
+                CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
+                CallbackQueryHandler(select_track_marketing)
             ]
         },
         fallbacks={
