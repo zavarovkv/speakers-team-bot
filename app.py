@@ -325,7 +325,7 @@ def check_selected_track(update, context):
 
 def select_company_widget(update, context):
     buttons = [[
-        InlineKeyboardButton('Выбрать компанию',
+        InlineKeyboardButton('Указать компанию',
                              callback_data=str(const.SELECT_COMPANY))
     ], [
         InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
