@@ -335,10 +335,18 @@ def select_company_widget(update, context):
 
     update.callback_query.answer()
     update.callback_query.edit_message_text(text='🏢 Компания\n\nРасскажите, в какой компании вы работаете, это поможет '
-                                                 'определить организаторам больше о вас узнать.\n\n',
+                                                 'организаторам больше о вас узнать.\n\n',
                                             reply_markup=keyboard)
 
     return const.SELECTING_COMPANY_ACTION
+
+
+def check_selected_company(update, context):
+    update.callback_query.answer(text='Пожалуйста, укажите компанию в которой работаете')
+
+
+def input_company(update, context):
+    pass
 
 
 def stop(update, context):
@@ -393,6 +401,11 @@ def main():
                 CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
                 CallbackQueryHandler(select_track_qa)
+            ],
+            const.SELECTING_COMPANY_ACTION: [
+                CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
+                CallbackQueryHandler(check_selected_company, pattern='^' + str(const.SELECT_COMPANY_NEXT) + '$'),
+                CallbackQueryHandler(input_company, pattern='^' + str(const.SELECT_COMPANY) + '$'),
             ]
         },
         fallbacks={
