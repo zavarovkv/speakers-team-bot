@@ -5,12 +5,10 @@ import os
 import logging
 import constants as const
 
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton,
-                      InlineKeyboardMarkup)
-from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          ConversationHandler, CallbackQueryHandler)
 
-# Enable logging
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
+from telegram.ext import (Updater, CommandHandler, ConversationHandler, CallbackQueryHandler)
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -126,6 +124,11 @@ def check_track_for_selected(t_type, context):
             if val in context.user_data:
                 if context.user_data[val] is True:
                     return True
+    elif t_type == const.TRACK_QA:
+        for val in const.TRACK_QA_SET:
+            if val in context.user_data:
+                if context.user_data[val] is True:
+                    return True
     return False
 
 
@@ -134,7 +137,8 @@ def is_track_selected(context):
             check_track_for_selected(const.TRACK_DS, context) or \
             check_track_for_selected(const.TRACK_MANAGEMENT, context) or \
             check_track_for_selected(const.TRACK_DESIGN, context) or \
-            check_track_for_selected(const.TRACK_MARKETING, context):
+            check_track_for_selected(const.TRACK_MARKETING, context) or \
+            check_track_for_selected(const.TRACK_QA, context):
         return True
     return False
 
@@ -285,6 +289,30 @@ def select_track_marketing(update, context):
     update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → Marketing', reply_markup=keyboard)
 
     return const.SELECTING_MARKETING
+
+
+def select_track_qa(update, context):
+    query = update.callback_query
+    btn_code = query.data
+
+    if btn_code in const.TRACK_QA_SET:
+        change_button_type(btn_code, context)
+
+    buttons = [[
+        InlineKeyboardButton(text=button_type(const.QA_AUTO, context) + 'QA / Auto',
+                             callback_data=str(const.QA_AUTO)),
+        InlineKeyboardButton(text=button_type(const.QA_MANUAL, context) + 'QA / Manual',
+                             callback_data=str(const.QA_MANUAL))
+    ], [
+        InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера → QA', reply_markup=keyboard)
+
+    return const.SELECTING_QA
 
 
 def check_selected_track(update, context):
