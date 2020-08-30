@@ -334,7 +334,7 @@ def select_company_widget(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='🏢 Компания, в которой работаете', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='🏢 Компания\n\nВыбрано: XXX\n\n', reply_markup=keyboard)
 
     return const.SELECTING_COMPANY_ACTION
 
