@@ -54,7 +54,7 @@ def select_track(update, context):
     ], [
         InlineKeyboardButton(text=button_type(const.TRACK_DESIGN, context) + 'Design & UX',
                              callback_data=str(const.TRACK_DESIGN)),
-        InlineKeyboardButton(text='☐ QA ↵', callback_data=str(const.TRACK_QA))
+        InlineKeyboardButton(text=track_type(const.TRACK_QA, context) + 'QA ↵', callback_data=str(const.TRACK_QA))
     ], [
         InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_TRACK_NEXT))
     ]]
