@@ -66,14 +66,14 @@ def select_track(update, context):
         update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([]))
 
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                                 text='⚙️ Настройки профиля\n\nВыберите специализацию и сферу, в которой вы '
-                                      'разбираетесь, расскажите о своем опыте выступлений.')
+                                 text='⚙️ Настройки профиля\n\nВыберите сферу, в которой вы '
+                                      'разбираетесь, расскажите о себе и своем опыте выступлений.')
 
         context.bot.send_message(chat_id=update.callback_query.from_user.id,
-                                 text='👨🏼‍💻 Специализация', reply_markup=keyboard)
+                                 text='👨🏼‍💻 Сфера', reply_markup=keyboard)
     else:
         update.callback_query.answer()
-        update.callback_query.edit_message_text(text='👨🏼‍💻 Специализация', reply_markup=keyboard)
+        update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера', reply_markup=keyboard)
 
     context.user_data[const.SELECT_TRACK_FROM_START] = False
 
@@ -186,7 +186,7 @@ def select_track_engineering(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Engineering', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера -> Engineering', reply_markup=keyboard)
 
     return const.SELECTING_ENGINEERING
 
@@ -217,7 +217,7 @@ def select_track_data_science(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Data Science', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера -> Data Science', reply_markup=keyboard)
 
     return const.SELECTING_DATA_SCIENCE
 
@@ -248,7 +248,7 @@ def select_track_management(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Management', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера -> Management', reply_markup=keyboard)
 
     return const.SELECTING_MANAGEMENT
 
@@ -287,7 +287,7 @@ def select_track_marketing(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 Marketing', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера -> Marketing', reply_markup=keyboard)
 
     return const.SELECTING_MARKETING
 
@@ -311,7 +311,7 @@ def select_track_qa(update, context):
     keyboard = InlineKeyboardMarkup(buttons)
 
     update.callback_query.answer()
-    update.callback_query.edit_message_text(text='👨🏼‍💻 QA', reply_markup=keyboard)
+    update.callback_query.edit_message_text(text='👨🏼‍💻 Сфера -> QA', reply_markup=keyboard)
 
     return const.SELECTING_QA
 
