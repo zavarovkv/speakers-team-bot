@@ -318,7 +318,7 @@ def select_track_qa(update, context):
 
 def check_selected_track(update, context):
     if is_track_selected(context):
-        select_company_widget(update, context)
+        return select_company_widget(update, context)
     else:
         update.callback_query.answer(text='Пожалуйста, выберите хотя бы одну сферу')
 
@@ -374,7 +374,7 @@ def main():
                 CallbackQueryHandler(select_track_marketing, pattern='^' + str(const.TRACK_MARKETING) + '$'),
                 CallbackQueryHandler(select_track_qa, pattern='^' + str(const.TRACK_QA) + '$'),
 
-                CallbackQueryHandler(select_company_widget, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
+                CallbackQueryHandler(check_selected_track, pattern='^' + str(const.SELECT_TRACK_NEXT) + '$'),
                 CallbackQueryHandler(select_track)
             ],
             const.SELECTING_ENGINEERING: [
