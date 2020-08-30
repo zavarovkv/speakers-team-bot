@@ -317,11 +317,12 @@ def select_track_qa(update, context):
 
 
 def check_selected_track(update, context):
-    if is_track_selected(context):
-        update.callback_query.answer(text='Продолжение скоро будет')
-    else:
-        update.callback_query.answer(text='Пожалуйста, выберите хотя бы одну специализацию')
+    if not is_track_selected(context):
+        update.callback_query.answer(text='Пожалуйста, выберите хотя бы одну сферу')
+        return
 
+    update.callback_query.answer(text='Продолжение скоро будет')
+    
 
 def stop(update, context):
     update.message.reply_text('Okay, bye.')
