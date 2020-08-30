@@ -317,12 +317,27 @@ def select_track_qa(update, context):
 
 
 def check_selected_track(update, context):
-    if not is_track_selected(context):
+    if is_track_selected(context):
+        select_company_widget(update, context)
+    else:
         update.callback_query.answer(text='Пожалуйста, выберите хотя бы одну сферу')
-        return
 
-    update.callback_query.answer(text='Продолжение скоро будет')
-    
+
+def select_company_widget(update, context):
+    buttons = [[
+        InlineKeyboardButton('Выбрать компанию',
+                             callback_data=str(const.SELECT_COMPANY))
+    ], [
+        InlineKeyboardButton(text='« Назад', callback_data=str(const.RETURN_TO_SELECT_TRACK)),
+        InlineKeyboardButton(text='Далее »', callback_data=str(const.SELECT_COMPANY_NEXT))
+    ]]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    update.callback_query.answer()
+    update.callback_query.edit_message_text(text='🏢 Компания, в которой работаете', reply_markup=keyboard)
+
+    return const.SELECTING_COMPANY_ACTION
+
 
 def stop(update, context):
     update.message.reply_text('Okay, bye.')
