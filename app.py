@@ -405,7 +405,7 @@ def main():
             const.SELECTING_COMPANY_ACTION: [
                 CallbackQueryHandler(select_track, pattern='^' + str(const.RETURN_TO_SELECT_TRACK) + '$'),
                 CallbackQueryHandler(check_selected_company, pattern='^' + str(const.SELECT_COMPANY_NEXT) + '$'),
-                CallbackQueryHandler(input_company, pattern='^' + str(const.SELECT_COMPANY) + '$'),
+                CallbackQueryHandler(input_company, pattern='^' + str(const.SELECT_COMPANY) + '$')
             ]
         },
         fallbacks={
