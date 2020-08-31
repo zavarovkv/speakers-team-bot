@@ -348,7 +348,7 @@ def check_selected_company(update, context):
 def input_company(update, context):
     user_data = context.user_data
     user_data[const.SELECT_COMPANY] = update.message.text
-    
+
     return select_company_widget(update, context)
 
 
